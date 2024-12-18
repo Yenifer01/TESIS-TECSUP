@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,6 +50,50 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+JAZZMIN_SETTINGS = {
+    "site_logo": "images/logito.png",
+    "login_logo": "images/login.png",
+    "site_icon": "images/logito.png",
+    "user_avatar": "images/user.png",
+    "custom_css": "css/rest_framework.css",
+    "site_title": "Panel de Administración",
+    "site_brand": "NutriFit",
+    "user_avatar": "images/avatar.png",
+    "site_header": "NutriFit",
+    "welcome_sign": "Bienvenido al Panel de Control de NutriFit",
+    
+     "topmenu_links": [
+        {"name": "Inicio", "url": "/", "permissions": ["auth.view_user"]},
+        {"name": "Dashboard", "url": "/admin/", "permissions": ["auth.view_user"]},
+    ],
+
+    # # Personalización de los módulos en el dashboard
+    # "dashboard_modules": [
+    #     {
+    #         "type": "group",
+    #         "title": "Gestión de Materiales",
+    #         "display": "tiles",  # Puedes usar tiles para que aparezcan en un formato más visual
+    #         "children": [
+    #             {"name": "Materiales", "url": "/admin/app/material/"},
+    #             {"name": "Añadir Material", "url": "/admin/app/material/add/"},
+    #         ]
+    #     },
+    #     {
+    #         "type": "group",
+    #         "title": "Pedidos",
+    #         "display": "tiles",
+    #         "children": [
+    #             {"name": "Pedidos Actuales", "url": "/admin/app/pedido/"},
+    #             {"name": "Nuevo Pedido", "url": "/admin/app/pedido/add/"},
+    #         ]
+    #     },
+    # ],
+    
+    # Módulos de acciones recientes (lo que ya se muestra en el dashboard por defecto)
+    "recent_actions": True,
+}
+
 
 ROOT_URLCONF = 'software_antropometrico.urls'
 
@@ -110,7 +153,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-pe'
 
 TIME_ZONE = 'UTC'
 
@@ -123,6 +166,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Directorio de archivos estáticos
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
