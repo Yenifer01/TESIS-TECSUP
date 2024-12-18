@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,6 +53,7 @@ MIDDLEWARE = [
 ]
 
 JAZZMIN_SETTINGS = {
+    "language_chooser": True,
     "show_ui_builder": True,
     "site_logo": "images/logito.png",
     "login_logo": "images/login.png",
@@ -161,6 +163,11 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('es', 'Español'),
+]
 
 
 # Static files (CSS, JavaScript, Images)
