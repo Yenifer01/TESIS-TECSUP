@@ -1,0 +1,8 @@
+
+/* Cambiar el sitio header a una imagen */
+#jazmin-site_brand {
+    background: url('/static/images/logo.png') no-repeat center center;
+    background-size: contain;
+    height: 100px;  /* Ajusta la altura de la cabecera si es necesario */
+    text-indent: -9999px;  /* Elimina el texto predeterminado */
+}

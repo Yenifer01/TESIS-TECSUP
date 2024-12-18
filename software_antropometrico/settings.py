@@ -52,6 +52,7 @@ MIDDLEWARE = [
 ]
 
 JAZZMIN_SETTINGS = {
+    "show_ui_builder": True,
     "site_logo": "images/logito.png",
     "login_logo": "images/login.png",
     "site_icon": "images/logito.png",
