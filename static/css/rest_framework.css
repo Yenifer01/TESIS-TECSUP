@@ -6,3 +6,52 @@
     height: 100px;  /* Ajusta la altura de la cabecera si es necesario */
     text-indent: -9999px;  /* Elimina el texto predeterminado */
 }
+/* Encabezado de la tabla */
+table thead {
+    background-color: palevioletred; /* Fondo color azul vibrante */
+    color: white; /* Texto blanco */
+    font-weight: bold; /* Texto en negrita */
+    font-size: 16px; /* Tamaño de letra más grande */
+    text-align: left;
+    border-bottom: 3px solid #03d4f8; /* Línea de separación */
+}
+
+/* Filas del cuerpo de la tabla */
+table tbody tr {
+    font-size: 14px; /* Tamaño de letra para el contenido */
+    color: #201f1f; /* Color de texto estándar */
+    transition: background-color 0.3s; /* Suaviza el cambio de color al pasar el ratón */
+}
+
+
+/* Celdas de la tabla */
+
+
+table thead {
+    background-color: #4CAF50; /* Cambia el color aquí */
+    color: white; /* Color del texto */
+  }
+
+/* Encabezado de la tabla */
+table thead span {
+    color:rgb(221, 221, 221) !important; /* Tamaño de letra más grande */
+    text-transform: uppercase; /* Letras en mayúsculas */
+    font-size: 13px;
+}
+
+.card {
+    background-color: #dce8eb;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #17A2B8;
+    border-color: #17A2B8;
+}
+
+.font-weight-light {
+    font-weight: 700 !important;
+}
+.table thead th {
+    color: #ffffff;
+    border-bottom: 0;
+}

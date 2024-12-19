@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'alimentos',
     'django_tables2',
     'jazzmin',
     'rest_framework',
@@ -53,6 +54,7 @@ MIDDLEWARE = [
 ]
 
 JAZZMIN_SETTINGS = {
+    "custom_css": "css/rest_framework.css",
     "language_chooser": True,
     "show_ui_builder": True,
     "site_logo": "images/logito.png",
@@ -98,6 +100,7 @@ JAZZMIN_SETTINGS = {
 }
 
 JAZZMIN_UI_TWEAKS = {
+    "theme": "slate",
     "navbar_small_text": False,
     "footer_small_text": False,
     "body_small_text": False,
