@@ -1,0 +1,36 @@
+
+.navbar {
+    background-color: #20c997; 
+}
+.navbar i {
+    color: #ffffff;  
+}
+.navbar a {
+    color: white !important; 
+}
+
+table thead {
+    background-color:#20c997; 
+}
+table thead a {
+    color: white !important;
+    font-weight: normal !important;
+}
+.brand-text {
+    color: white !important; 
+}
+.fa-key{
+    color: #343a40 !important;
+}
+
+.fa-users{
+    color: #343a40 !important; 
+}
+.dropdown-item[href="/admin/password_change/"] {
+    color: #343a40 !important;  
+}
+
+.dropdown-item.dropdown-footer[href="/admin/auth/user/1/change/"] {
+    color: #343a40 !important; 
+}
+

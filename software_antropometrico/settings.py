@@ -30,6 +30,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'reportes',
+    'pacientes',
     'alimentos',
     'django_tables2',
     'jazzmin',
@@ -54,14 +56,15 @@ MIDDLEWARE = [
 ]
 
 JAZZMIN_SETTINGS = {
-    "custom_css": "css/rest_framework.css",
+    "custom_dashboard": "reportes.dashboard.MyCustomDashboard",
+    "related_modal_active": True,
+    "custom_css": "css/admin_custom.css",
     "language_chooser": True,
     "show_ui_builder": True,
     "site_logo": "images/logito.png",
     "login_logo": "images/login.png",
     "site_icon": "images/logito.png",
     "user_avatar": "images/user.png",
-    "custom_css": "css/rest_framework.css",
     "site_title": "Panel de Administración",
     "site_brand": "NutriFit",
     "user_avatar": "images/avatar.png",
@@ -71,31 +74,25 @@ JAZZMIN_SETTINGS = {
      "topmenu_links": [
         {"name": "Inicio", "url": "/", "permissions": ["auth.view_user"]},
         {"name": "Dashboard", "url": "/admin/", "permissions": ["auth.view_user"]},
+        {"name": "Reportes", "url": "/reportes/", "permissions": ["auth.view_user"]},
     ],
+      
+     "icons": {
+        "auth": "fas fa-users-cog",  
+        "auth.User": "fas fa-user",  
+        "auth.Group": "fas fa-users", 
+        "pacientes.Paciente": "fas fa-user-md", 
+        "alimentos.Alimento": "fas fa-utensils",
+        "alimentos.Grupo":"fas fa-bowl-food"
+    },
 
-    # # Personalización de los módulos en el dashboard
-    # "dashboard_modules": [
-    #     {
-    #         "type": "group",
-    #         "title": "Gestión de Materiales",
-    #         "display": "tiles",  # Puedes usar tiles para que aparezcan en un formato más visual
-    #         "children": [
-    #             {"name": "Materiales", "url": "/admin/app/material/"},
-    #             {"name": "Añadir Material", "url": "/admin/app/material/add/"},
-    #         ]
-    #     },
-    #     {
-    #         "type": "group",
-    #         "title": "Pedidos",
-    #         "display": "tiles",
-    #         "children": [
-    #             {"name": "Pedidos Actuales", "url": "/admin/app/pedido/"},
-    #             {"name": "Nuevo Pedido", "url": "/admin/app/pedido/add/"},
-    #         ]
-    #     },
-    # ],
-    
-    # Módulos de acciones recientes (lo que ya se muestra en el dashboard por defecto)
+     # Menú lateral personalizado
+    "custom_links": {
+        "reportes": [  # Aquí "reportes" debe coincidir con el nombre de tu app
+            {"name": "Reportes", "url": "/reportes/", "icon": "fas fa-chart-line"},
+        ]
+    },
+
     "recent_actions": True,
 }
 
@@ -105,7 +102,7 @@ JAZZMIN_UI_TWEAKS = {
     "footer_small_text": False,
     "body_small_text": False,
     "brand_small_text": False,
-    "brand_colour": False,
+    "brand_colour": "navbar-teal",
     "accent": "accent-teal",
     "navbar": "navbar-white navbar-light",
     "no_navbar_border": False,
@@ -138,7 +135,8 @@ ROOT_URLCONF = 'software_antropometrico.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS':'', 
+        #'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -208,7 +206,8 @@ LANGUAGES = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # Directorio de archivos estáticos
 ]

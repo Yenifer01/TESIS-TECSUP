@@ -20,6 +20,9 @@ from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',include('alimentos.urls')),
+    path('',include('pacientes.urls')),
+    path('',include('reportes.urls')),
 ]
 
 urlpatterns += [

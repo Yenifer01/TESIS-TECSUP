@@ -11,11 +11,10 @@ class Grupo(models.Model):
     class Meta:
         verbose_name_plural = "Grupos"
 
-
 class Alimento(models.Model):
     id= models.AutoField(primary_key=True)
-    codigo = models.CharField(max_length=255, blank=True, null=True)
-    nombre = models.CharField(max_length=255, blank=True, null=True)
+    codigo = models.CharField(max_length=20, blank=True, null=True)
+    nombre = models.CharField(max_length=50, blank=True, null=True)
     grupo = models.ForeignKey(Grupo, on_delete=models.CASCADE)
     energia_kcal = models.FloatField(blank=True, null=True)
     energia_kj = models.FloatField(blank=True, null=True)
