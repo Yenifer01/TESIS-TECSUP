@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -56,7 +57,6 @@ MIDDLEWARE = [
 ]
 
 JAZZMIN_SETTINGS = {
-    "custom_dashboard": "reportes.dashboard.MyCustomDashboard",
     "related_modal_active": True,
     "custom_css": "css/admin_custom.css",
     "language_chooser": True,
@@ -85,13 +85,24 @@ JAZZMIN_SETTINGS = {
         "alimentos.Alimento": "fas fa-utensils",
         "alimentos.Grupo":"fas fa-bowl-food"
     },
-
-     # Menú lateral personalizado
     "custom_links": {
-        "reportes": [  # Aquí "reportes" debe coincidir con el nombre de tu app
-            {"name": "Reportes", "url": "/reportes/", "icon": "fas fa-chart-line"},
-        ]
+        "reportes": [  # Puedes usar un nombre único para identificarlo
+            {
+                "name": "Panel de Reportes",  # Nombre que aparece en el menú
+                "url": "/admin/reportes/",    # URL que apunta a tu dashboard
+                "icon": "fas fa-chart-line",  # Ícono del menú
+                "permissions": ["auth.view_user"],  # Permisos necesarios (puedes ajustarlo)
+            }
+        ],
     },
+
+    "side_menu": [
+        {"app": "reportes", "label": "Reportes", "icon": "fas fa-chart-line"},  # Aquí conectamos con custom_links
+    ],
+
+   
+   
+
 
     "recent_actions": True,
 }
@@ -129,14 +140,13 @@ JAZZMIN_UI_TWEAKS = {
     }
 }
 
-
 ROOT_URLCONF = 'software_antropometrico.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS':'', 
-        #'DIRS': [BASE_DIR / 'templates'],
+        #'DIRS':'', 
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

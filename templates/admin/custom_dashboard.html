@@ -1,57 +1,12 @@
-{% extends 'admin/index.html' %}
+{% extends "admin/base_site.html" %}
 {% block content %}
-<style>
-    .square-card {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .card-body {
-        text-align: center;
-    }
-
-    .chart-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-
-    .chart {
-        width: 100%; 
-        margin-bottom: 20px;
-    }
-
-    .custom-card {
-        margin-top: 1.5rem;
-        text-align: center;
-    }
-
-    .custom-card-title {
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-    }
-    .espacio{
-        margin-right:2rem;
-    }
-
-    @media (max-width: 767px) {
-        .responsive-img {
-            max-width: 40%; /* Puedes ajustar el valor según lo necesites */
-            margin-top: 1rem;
-        }
-    }
-</style>
 <div class="container">
 
     <div class="row">
         <div class="col-md-4 col-12 mb-3">
             <div class="card h-100 border-0 rounded shadow-sm">
                 <div class="card-body text-center">
-                    <h5 class="card-title mb-3"><strong>TOTAL DE RESERVAS</strong></h5>
+                    <h5 class="card-title mb-3"><strong>TOTAL DE ALIMENTOS</strong></h5>
                     <p class="card-text display-4">{{ total_alimentos }}</p>
                 </div>
             </div>
@@ -60,7 +15,7 @@
         <div class="col-md-4 col-12 mb-3">
             <div class="card h-100 border-0 rounded shadow-sm">
                 <div class="card-body text-center">
-                    <h5 class="card-title mb-3"><strong>N° DE USUARIOS</strong></h5>
+                    <h5 class="card-title mb-3"><strong>TOTAL DE PACIENTES</strong></h5>
                     <p class="card-text display-4">{{ total_pacientes }}</p>
                 </div>
             </div>
@@ -69,5 +24,4 @@
     </div>
 
 </div>
-
 {% endblock %}

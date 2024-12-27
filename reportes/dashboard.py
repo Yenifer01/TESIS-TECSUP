@@ -7,7 +7,7 @@ from django.db.models.functions import TruncMonth
 from pacientes.models import*
 
 class MyCustomDashboard(View):
-    template_name = 'admin/custom_dashboard.html'
+    template_name = '../templates/admin/custom_dashboard.html'
 
     def get(self, request, *args, **kwargs):
         total_alimentos = Alimento.objects.count()
