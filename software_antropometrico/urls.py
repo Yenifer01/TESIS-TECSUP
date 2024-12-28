@@ -23,6 +23,7 @@ urlpatterns = [
     path('',include('alimentos.urls')),
     path('',include('pacientes.urls')),
     path('',include('reportes.urls')),
+    path('',include('fa.urls')),
 ]
 
 urlpatterns += [

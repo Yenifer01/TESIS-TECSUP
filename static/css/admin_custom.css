@@ -34,3 +34,10 @@ table thead a {
     color: #343a40 !important; 
 }
 
+.card-custom-border {
+    border: 5px solid #20c997; 
+    border-radius: 10px;      
+}
+.text-blue{
+    color: black;
+}

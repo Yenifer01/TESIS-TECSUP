@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'fa',
     'reportes',
     'pacientes',
     'alimentos',
@@ -44,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-
 MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -61,22 +61,32 @@ JAZZMIN_SETTINGS = {
     "custom_css": "css/admin_custom.css",
     "language_chooser": True,
     "show_ui_builder": True,
-    "site_logo": "images/logito.png",
+    "site_logo": "images/site.png",
     "login_logo": "images/login.png",
-    "site_icon": "images/logito.png",
+    "site_icon": "images/site.png",
     "user_avatar": "images/user.png",
     "site_title": "Panel de Administración",
     "site_brand": "NutriFit",
     "user_avatar": "images/avatar.png",
     "site_header": "NutriFit",
     "welcome_sign": "Bienvenido al Panel de Control de NutriFit",
-    
-     "topmenu_links": [
+
+    "custom_links": {
+    "reports": [  
+            {
+                "name": "Reportes",  
+                "url": "admin:reportes",  
+                "icon": "fas fa-chart-line",  
+                "permissions": ["auth.view_user"],  
+            }
+        ]
+    },
+
+    "topmenu_links": [
         {"name": "Inicio", "url": "/", "permissions": ["auth.view_user"]},
         {"name": "Dashboard", "url": "/admin/", "permissions": ["auth.view_user"]},
         {"name": "Reportes", "url": "/reportes/", "permissions": ["auth.view_user"]},
     ],
-      
      "icons": {
         "auth": "fas fa-users-cog",  
         "auth.User": "fas fa-user",  
@@ -85,25 +95,6 @@ JAZZMIN_SETTINGS = {
         "alimentos.Alimento": "fas fa-utensils",
         "alimentos.Grupo":"fas fa-bowl-food"
     },
-    "custom_links": {
-        "reportes": [  # Puedes usar un nombre único para identificarlo
-            {
-                "name": "Panel de Reportes",  # Nombre que aparece en el menú
-                "url": "/admin/reportes/",    # URL que apunta a tu dashboard
-                "icon": "fas fa-chart-line",  # Ícono del menú
-                "permissions": ["auth.view_user"],  # Permisos necesarios (puedes ajustarlo)
-            }
-        ],
-    },
-
-    "side_menu": [
-        {"app": "reportes", "label": "Reportes", "icon": "fas fa-chart-line"},  # Aquí conectamos con custom_links
-    ],
-
-   
-   
-
-
     "recent_actions": True,
 }
 
