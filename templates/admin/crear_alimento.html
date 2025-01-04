@@ -1,0 +1,20 @@
+<!-- crear_alimento.html -->
+{% load static %}
+<html>
+<head>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="card mt-1 mb-3">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                {{ form.as_p }}  <!-- Aquí Django renderiza automáticamente todos los campos del formulario -->
+                
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

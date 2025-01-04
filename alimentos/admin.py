@@ -23,4 +23,4 @@ class AlimentoAdmin(admin.ModelAdmin):
 'tiamina_mg', 'riboflavina_mg', 'niacina_mg', 'vitaminaC_mg', 'acido_folico_ug', 'sodio_mg', 'potasio_mg']
     search_fields = ['codigo', 'nombre']
     list_filter = ['grupo']
-    list_per_page = 20 
+    change_form_template = "admin/alimentos/alimento/change_form.html"

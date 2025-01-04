@@ -1,0 +1,138 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_modify jazzmin %}
+{% get_jazzmin_settings request as jazzmin_settings %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'vendor/select2/css/select2.min.css' %}">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> -->
+{% endblock %}
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+    {{ media }}
+{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
+
+{% if not is_popup %}
+    {% block breadcrumbs %}
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a></li>
+            <li class="breadcrumb-item">
+                {% if has_view_permission %}
+                    <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+                {% else %}
+                    {{ opts.verbose_name_plural|capfirst }}
+                {% endif %}
+            </li>
+            <li class="breadcrumb-item active">
+                {% if add %}
+                    {% blocktrans with name=opts.verbose_name %}Add {{ name }}{% endblocktrans %}
+                {% else %}
+                    {{ original|truncatewords:"18" }}
+                {% endif %}
+            </li>
+        </ol>
+    {% endblock %}
+{% endif %}
+
+{% block content_title %} {{ opts.verbose_name_plural|capfirst }} {% endblock %}
+
+{% block content %}
+<div id="content-main" class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <!-- Aumenta el ancho del card -->
+            <div class="card custom-card shadow"
+                style="max-width: 100%; margin: auto;">
+
+                <div class="custom-card-body p-4">
+                    <form {% if has_file_field %}enctype="multipart/form-data"
+                        {% endif %}action="{{ form_url }}" method="post"
+                        id="{{ opts.model_name }}_form" novalidate>
+                        {% csrf_token %}
+
+                        {% if errors %}
+                        <div class="alert alert-danger">
+                            {% if errors|length == 1 %}
+                            {% trans "Please correct the error below." %}
+                            {% else %}
+                            {% trans "Please correct the errors below." %}
+                            {% endif %}
+                        </div>
+                        {% for error in adminform.form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ error|capfirst }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                        <!-- Formulario en dos columnas -->
+                        <div class="form-row">
+                            {% for field in adminform.form.visible_fields %}
+                            <div class="col-md-6 mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text">{{ field.label }}</span>
+                                    {{ field }}
+                                    
+                                    <!-- Aquí colocamos los iconos de editar/agregar/visualizar -->
+                                    {% if field.field.widget.attrs.related_url %}
+                                    <a href="{{ field.field.widget.attrs.related_url }}" class="btn btn-sm btn-link">
+                                        <i class="fas fa-pencil-alt"></i> <!-- Icono de editar -->
+                                    </a>
+                                    {% endif %}
+                                    
+                                    {% if field.field.widget.attrs.add_url %}
+                                    <a href="{{ field.field.widget.attrs.add_url }}" class="btn btn-sm btn-link">
+                                        <i class="fas fa-plus-circle"></i> <!-- Icono de agregar -->
+                                    </a>
+                                    {% endif %}
+                                    
+                                    {% if field.field.widget.attrs.view_url %}
+                                    <a href="{{ field.field.widget.attrs.view_url }}" class="btn btn-sm btn-link">
+                                        <i class="fas fa-eye"></i> <!-- Icono de visualizar -->
+                                    </a>
+                                    {% endif %}
+                                    
+                                    {% if field.errors %}
+                                        <div class="text-danger">{{ field.errors|join:', ' }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+
+                        <div class="custom-card-body">
+                            <div class="d-flex justify-content-between gap-3">
+                                <button type="button" class="btn btn-danger" onclick="window.history.back();">
+                                    {% trans "Cancelar" %}
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    {% trans "Guardar" %}
+                                </button>
+                            </div>
+                        </div>
+        
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+    {{  block.super }}
+    <script type="text/javascript" src="{% static 'vendor/select2/js/select2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'jazzmin/js/change_form.js' %}"></script>
+    {% if jazzmin_settings.related_modal_active %}
+    <script type="text/javascript" src="{% static 'jazzmin/plugins/bootstrap-show-modal/bootstrap-show-modal.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'jazzmin/js/related-modal.js' %}"></script>
+    {% endif %}
+{% endblock %}

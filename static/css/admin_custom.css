@@ -38,6 +38,50 @@ table thead a {
     border: 5px solid #20c997; 
     border-radius: 10px;      
 }
-.text-blue{
-    color: black;
+
+/* ESTILOS */
+
+.custom-card-body {
+    padding: 2rem; 
 }
+.input-group {
+    display: flex; 
+    align-items: center; 
+    gap: 0; 
+}
+.input-group-text {
+    background-color: #20c997;
+    border-right: none !important; 
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    color: white;
+}
+
+input, select, textarea {
+    flex: 1; 
+    border: 1px solid #ccc;
+    border-left: none; 
+    padding: 0.5rem;
+    border-radius: 0; 
+    font-size: 0.875rem;
+    color: #495057;
+}
+
+label {
+    font-weight: bold; 
+    margin-bottom: 0; 
+    display: flex; 
+    align-items: center; 
+}
+
+/* Estilos para el form de Pacientes */
+
+input::placeholder {
+    color: blue;
+    font-style: italic;
+}
+
+
+
+
+

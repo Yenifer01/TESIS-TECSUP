@@ -10,36 +10,45 @@ class DatosPersonalesForm(forms.ModelForm):
     class Meta:
         model = Paciente
         fields = ['num_ficha', 'nombre', 'edad', 'genero', 'ocupacion']
-        widgets = {
-            'num_ficha': forms.TextInput(attrs={'class': 'input-class'}),
-            'nombre': forms.TextInput(attrs={'class': 'input-class'}),
-            'edad': forms.NumberInput(attrs={'class': 'input-class'}),
-            'genero': forms.Select(attrs={'class': 'input-class'}),
-            'ocupacion': forms.TextInput(attrs={'class': 'input-class'}),
-        }
+       
 
 class HabitosForm(forms.ModelForm):
     class Meta:
         model = Paciente
         fields = ['alcohol', 'tabaco', 'numero_cig_dia']
-        widgets = {
-            'alcohol': forms.Select(attrs={'class': 'input-class'}),
-            'tabaco': forms.Select(attrs={'class': 'input-class'}),
-            'numero_cig_dia': forms.NumberInput(attrs={'class': 'input-class'}),
-        }
+        
 
 class FuncionesBiologicasForm(forms.ModelForm):
     class Meta:
         model = Paciente
         fields = ['apetito', 'horas_sueño', 'sed', 'peso_6_meses']
-        widgets = {
-            'apetito': forms.Textarea(attrs={'class': 'input-class'}),
-            'horas_sueño': forms.NumberInput(attrs={'class': 'input-class'}),
-            'sed': forms.NumberInput(attrs={'class': 'input-class'}),
-            'peso_6_meses': forms.NumberInput(attrs={'class': 'input-class'}),
-        }
+        
 
-    def as_p(self):
-        form_html = super().as_p()
-        cancel_button = f'<a href="{reverse("admin:index")}" class="btn btn-danger">Cancelar</a>'
-        return mark_safe(form_html + cancel_button)
+
+class ActividadFisicaForm(forms.ModelForm):
+    class Meta:
+        model = Paciente
+        fields = ['tipo', 'intensidad', 'frecuencia', 'duracion','recomendacion','fc_actividad']
+       
+
+class AntecedentesFamiliaresForm(forms.ModelForm):
+    class Meta:
+        model = Paciente
+        fields = ['diabetes', 'enf_coronarias', 'hipertension', 'obesidad',' dislipidemia']
+       
+class EvaluacionAntropometricaForm(forms.ModelForm):
+    class Meta:
+        model = Paciente
+        fields = ['peso_actual', 'talla', 'p_brazo_contraido', 
+                  'd_humero','p_pantorrilla','d_femur','pliegue_suprespinal',
+                  'pliegue_pantorilla','indice_ponderal',
+                  'peso_ideal','imc','tipo_obesidad',
+                  'cir_brazo','cintura', 'p_abdominal','cadera',
+                  'recto_leu','icc','ice','circunferencia_carpo',
+                  'albumina','pliegue_triccipital',
+                    'obesidad_central','pliegue_biccipital',
+                    'trigliceridos','pliegue_subescapular',
+                    'c_HDL','pliegue_suprailiaco']
+       
+
+

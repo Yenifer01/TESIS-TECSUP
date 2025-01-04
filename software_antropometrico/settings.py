@@ -159,7 +159,7 @@ WSGI_APPLICATION = 'software_antropometrico.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bdspdya1',
+        'NAME': 'bdspdya',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -212,6 +212,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # Directorio de archivos estáticos
 ]
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
