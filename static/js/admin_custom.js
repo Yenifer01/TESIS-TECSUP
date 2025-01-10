@@ -2,6 +2,17 @@
 document.addEventListener('DOMContentLoaded', function () {
     const tabacoField = $('#id_tabaco');  
     const numeroCigDiaField = document.querySelector('#id_numero_cig_dia'); 
+    const fcActividadField = document.querySelector('#id_fc_actividad'); 
+
+
+
+    if (numeroCigDiaField) {
+        numeroCigDiaField.setAttribute('placeholder', 'Se agregará 0 si Tabaco = NO(-)');
+    }
+
+    if (fcActividadField) {
+        fcActividadField.setAttribute('placeholder', 'Escoger un promedio de Recomendación');
+    }
 
     if (tabacoField.length && numeroCigDiaField) {
         tabacoField.on('change', function () {
@@ -9,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (selectedValue === 'No(-)') {
                 numeroCigDiaField.value = 0;
             } else if (numeroCigDiaField.value == 0) {
-                console.log('Limpiando el valor de numero_cig_dia');
                 numeroCigDiaField.value = '';
             }
         });
@@ -36,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-
         //Calcular el indice Ponderal
     const pesoActualField = $('#id_peso_actual'); 
     const tallaField = $('#id_talla'); 
@@ -73,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-
 
      // Calcular el IMC y clasificar el tipo de obesidad
      const imcField = $('#id_imc');
@@ -113,7 +121,6 @@ document.addEventListener('DOMContentLoaded', function () {
                      break;
                  }
              }
- 
              tipoObesidadField.val(categoria); 
          }
  
@@ -122,7 +129,6 @@ document.addEventListener('DOMContentLoaded', function () {
      }
 
      // Calcular ICC
-
     const cinturaField = $('#id_cintura'); 
     const caderaField = $('#id_cadera'); 
     const iccField = document.querySelector('#id_icc'); 
@@ -144,8 +150,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     //Calcular ICE
-
-   // Calcular ICE
 const iceField = $('#id_ice');
 
 if (tallaField.length && cinturaField.length && iceField.length) {
@@ -154,17 +158,13 @@ if (tallaField.length && cinturaField.length && iceField.length) {
         const cintura = parseFloat(cinturaField.val()); 
 
         if (!isNaN(talla) && talla > 0 && !isNaN(cintura) && cintura > 0) {
-            const ice = cintura / (talla * 100); // Fórmula correcta
-            iceField.val(ice.toFixed(2)); // Establece el valor con .val()
+            const ice = cintura / (talla * 100); 
+            iceField.val(ice.toFixed(2)); 
         } else {
-            iceField.val(''); // Resetea el valor si hay datos inválidos
+            iceField.val(''); 
         }
     }
-
-    // Escuchar cambios en los campos necesarios
     tallaField.on('input change', calcularIce); 
     cinturaField.on('input change', calcularIce); 
 }
-
-
 });

@@ -1,0 +1,42 @@
+
+.card .form-group-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px; 
+}
+
+.card .form-group {
+    display: flex; 
+    align-items: center;
+    gap: 10px; 
+}
+
+.card .form-group label {
+    font-weight: bold;
+    flex: 1; 
+    text-align: right;
+}
+
+.card .form-group input,
+.card .form-group select {
+    flex: 2; 
+    width: 100%; 
+    max-width: none; 
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.card .form-group-container input,
+.card .form-group-container select {
+    min-width: 240px; 
+}
+
+@media (max-width: 768px) {
+    .card .form-group-container {
+        grid-template-columns: 1fr; 
+    }
+    .card .form-group label {
+        text-align: left;
+    }
+}

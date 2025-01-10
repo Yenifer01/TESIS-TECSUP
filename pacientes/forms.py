@@ -10,6 +10,13 @@ class DatosPersonalesForm(forms.ModelForm):
     class Meta:
         model = Paciente
         fields = ['num_ficha', 'nombre', 'edad', 'genero', 'ocupacion']
+        widgets = {
+            'num_ficha': forms.TextInput(attrs={'class': 'form-control column-field'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control column-field'}),
+            'edad': forms.NumberInput(attrs={'class': 'form-control column-field'}),
+            'genero': forms.Select(attrs={'class': 'form-control column-field'}),
+            'ocupacion': forms.TextInput(attrs={'class': 'form-control column-field'}),
+        }
        
 
 class HabitosForm(forms.ModelForm):
@@ -49,6 +56,7 @@ class EvaluacionAntropometricaForm(forms.ModelForm):
                     'obesidad_central','pliegue_biccipital',
                     'trigliceridos','pliegue_subescapular',
                     'c_HDL','pliegue_suprailiaco']
-       
-
-
+        
+    
+            
+        

@@ -76,12 +76,31 @@ label {
 
 /* Estilos para el form de Pacientes */
 
-input::placeholder {
-    color: blue;
-    font-style: italic;
+.nav-tabs .nav-item {
+    display: inline-block;
+    margin-right: 15px;  
 }
 
-
-
-
+.nav-tabs .nav-link {
+    font-size: 16px;
+    padding: 12px 25px;
+}
+.tab-content {
+    background-color: #f9f9f9;  
+    border-top: 2px solid #20c997;
+    padding: 30px;
+}
+.nav-tabs .nav-link.active {
+    animation: pulse 0.3s ease-in-out;
+}
+.vIntegerField::placeholder {
+    color: #444;
+    font-size: 10px;
+    font-style: italic;
+}
+#id_fc_actividad::placeholder {
+    color: #444;
+    font-style: italic;
+    font-size: 9.7px;
+}
 

@@ -99,7 +99,6 @@ JAZZMIN_SETTINGS = {
 }
 
 JAZZMIN_UI_TWEAKS = {
-    "theme": "slate",
     "navbar_small_text": False,
     "footer_small_text": False,
     "body_small_text": False,

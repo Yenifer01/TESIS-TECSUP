@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-
 class Paciente(models.Model):
     # Datos personales
     id = models.AutoField(primary_key=True)
@@ -171,7 +170,7 @@ class Paciente(models.Model):
 
     cintura = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Cintura ATP III: ♂ ≥102, ♀ ≥ 88(cm) IDF: ♂ ≥ 98 ♀ ≥ 88')
 
-    p_abdominal = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Perimetro Abdominal(Cm)')
+    p_abdominal = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Perimetro Abdominal(cm)')
 
     cadera = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Cadera(cm)')
 
@@ -182,8 +181,7 @@ class Paciente(models.Model):
     ice = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='ICE: ♂ ♀ > 0.5')
   
     #Falta 
-
-    circunferencia_carpo = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Circunferencia del Carpo (Cm)')
+    circunferencia_carpo = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Circunferencia del Carpo (cm)')
 
     albumina = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Albumina (g/dL)')
     pliegue_triccipital = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Pliegue Triccipital (mm)')
