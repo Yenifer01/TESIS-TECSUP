@@ -46,7 +46,6 @@
 <div id="content-main" class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-12">
-            <!-- Aumenta el ancho del card -->
             <div class="card custom-card shadow"
                 style="max-width: 100%; margin: auto;">
 
@@ -70,31 +69,27 @@
                         </div>
                         {% endfor %}
                         {% endif %}
-
-                        <!-- Formulario en dos columnas -->
                         <div class="form-row">
                             {% for field in adminform.form.visible_fields %}
                             <div class="col-md-6 mb-3">
                                 <div class="input-group">
                                     <span class="input-group-text">{{ field.label }}</span>
                                     {{ field }}
-                                    
-                                    <!-- Aquí colocamos los iconos de editar/agregar/visualizar -->
                                     {% if field.field.widget.attrs.related_url %}
                                     <a href="{{ field.field.widget.attrs.related_url }}" class="btn btn-sm btn-link">
-                                        <i class="fas fa-pencil-alt"></i> <!-- Icono de editar -->
+                                        <i class="fas fa-pencil-alt"></i> 
                                     </a>
                                     {% endif %}
                                     
                                     {% if field.field.widget.attrs.add_url %}
                                     <a href="{{ field.field.widget.attrs.add_url }}" class="btn btn-sm btn-link">
-                                        <i class="fas fa-plus-circle"></i> <!-- Icono de agregar -->
+                                        <i class="fas fa-plus-circle"></i> 
                                     </a>
                                     {% endif %}
                                     
                                     {% if field.field.widget.attrs.view_url %}
                                     <a href="{{ field.field.widget.attrs.view_url }}" class="btn btn-sm btn-link">
-                                        <i class="fas fa-eye"></i> <!-- Icono de visualizar -->
+                                        <i class="fas fa-eye"></i> 
                                     </a>
                                     {% endif %}
                                     

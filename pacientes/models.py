@@ -144,9 +144,9 @@ class Paciente(models.Model):
 
     talla = models.DecimalField(max_digits=10, decimal_places=2,verbose_name='Talla (m)')
 
-    p_brazo_contraido = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='Perimt.Brazo contraido(cm)')
+    p_brazo_contraido = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='P. Brazo contraido(cm)')
 
-    d_humero = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='Diámetro Húmero(cm)')
+    d_humero = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='D.Húmero (cm)')
 
     p_pantorrilla = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='P. Pantorilla (cm)')
 
@@ -170,7 +170,7 @@ class Paciente(models.Model):
 
     cintura = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Cintura ATP III: ♂ ≥102, ♀ ≥ 88(cm) IDF: ♂ ≥ 98 ♀ ≥ 88')
 
-    p_abdominal = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Perimetro Abdominal(cm)')
+    p_abdominal = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Perímetro Abdominal(cm)')
 
     cadera = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Cadera(cm)')
 

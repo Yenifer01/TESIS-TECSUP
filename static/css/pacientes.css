@@ -1,42 +1,135 @@
 
-.card .form-group-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 20px; 
-}
-
-.card .form-group {
+/* Estilos para mi items de pacientes */
+.nav-tabs {
     display: flex; 
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    border-bottom: none;
+}
+
+.nav-tabs .nav-item {
+    flex: 1 1 calc(33.33% - 15px); 
+    margin: 5px; 
+    box-sizing: border-box;
+ }
+
+.nav-tabs .nav-link {
+    text-align: center;
+    font-size: 16px;
+    padding: 12px 20px;
+    color: #20c997;
+    background-color: #fff;
+    border: 2px solid #20c997;
+    border-radius: 0;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link.active {
+    color: #fff;
+    background-color:  #20c997;
+    border-color:  #20c997;
+}
+
+.tab-content {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 0;
+}
+
+/* Estilos para los inputs  de pacientes */
+.card.wide.extrapadding {
+    padding: 20px;
+    max-width: 100%; 
+    margin: 0 auto; 
+    box-sizing: border-box; 
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.card-body .form-group .row {
+    display: flex;
+    flex-wrap: wrap; 
     align-items: center;
-    gap: 10px; 
+    margin-bottom: 10px;
 }
-
-.card .form-group label {
+.card-body label {
+    flex: 1;
+    text-align: left;
     font-weight: bold;
-    flex: 1; 
-    text-align: right;
+    margin-right: 10px;
+    font-size: 1rem;
+    margin-bottom: 5px; 
 }
 
-.card .form-group input,
-.card .form-group select {
-    flex: 2; 
-    width: 100%; 
-    max-width: none; 
-    padding: 8px;
+.card-body .form-group .col-sm-7 {
+    flex: 2;
+    max-width: 100%;
+}
+
+.card-body input,
+.card-body select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    transition: border-color 0.3s ease;
     box-sizing: border-box;
 }
-.card .form-group-container input,
-.card .form-group-container select {
-    min-width: 240px; 
+
+.card-body input:focus,
+.card-body select:focus {
+    border-color:  #20c997;
+    outline: none;
+}
+
+.card-body .form-group {
+    margin-bottom: 2px;
 }
 
 @media (max-width: 768px) {
-    .card .form-group-container {
-        grid-template-columns: 1fr; 
+    .card-body .row {
+        flex-wrap: wrap; 
     }
-    .card .form-group label {
-        text-align: left;
+
+    .card-body label {
+        flex: 100%; 
+        margin-bottom: 5px;
+        font-size: 0.9rem; 
+    }
+
+    .card-body .col-sm-7 {
+        flex: 100%;
+    }
+
+    .card-body input,
+    .card-body select {
+        font-size: 0.9rem; 
+        padding: 8px; 
+    }
+
+    .card.wide.extrapadding {
+        padding: 15px; 
+}
+}
+
+@media (max-width: 480px) {
+
+    .card-body {
+        padding: 10px;
+    }
+
+    .card-body label {
+        font-size: 0.85rem; 
+    }
+    .card-body input,
+    .card-body select {
+        font-size: 0.85rem;
+        padding: 6px;
+    }
+    .card-body .form-group {
+        margin-bottom: 10px;
     }
 }
