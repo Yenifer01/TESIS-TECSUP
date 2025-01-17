@@ -3,7 +3,7 @@ from .models import Paciente
 
 @admin.register(Paciente)
 class PacienteAdmin(admin.ModelAdmin):
-    list_display = ['num_ficha', 'nombre', 'edad', 'genero', 'ocupacion']
+    list_display = ['num_ficha', 'nombre', 'edad', 'genero', 'ocupacion','calorias_requeridas','calorias_a_planificar']
     search_fields = ['num_ficha', 'nombre']
     list_filter = ['genero', 'ocupacion']
     exclude = ('num_ficha',)
@@ -47,9 +47,15 @@ class PacienteAdmin(admin.ModelAdmin):
             ),
             'classes': ('wide', 'extrapadding'),
         }),
+        ("Requerimiento Energético", {
+            'fields': (
+                'formula','calorias_requeridas','calorias_a_planificar',
+                'ingesta_calorica','adecuacion_ingesta','porcentaje_GET'
+            ),
+            'classes': ('wide', 'extrapadding'),
+        }),
     ]
    
-    
     class Media:
         js = ('js/admin_custom.js',)
         css = {

@@ -43,20 +43,30 @@ class AntecedentesFamiliaresForm(forms.ModelForm):
         model = Paciente
         fields = ['diabetes', 'enf_coronarias', 'hipertension', 'obesidad',' dislipidemia']
        
-class EvaluacionAntropometricaForm(forms.ModelForm):
+class EvaluacionAntropometricaIForm(forms.ModelForm):
     class Meta:
         model = Paciente
         fields = ['peso_actual', 'talla', 'p_brazo_contraido', 
                   'd_humero','p_pantorrilla','d_femur','pliegue_suprespinal',
                   'pliegue_pantorilla','indice_ponderal',
                   'peso_ideal','imc','tipo_obesidad',
-                  'cir_brazo','cintura', 'p_abdominal','cadera',
-                  'recto_leu','icc','ice','circunferencia_carpo',
+                  'cir_brazo','cintura','p_abdominal','cadera']
+
+class EvaluacionAntropometricaIIForm(forms.ModelForm):
+    class Meta:
+        model = Paciente
+        fields = ['recto_leu','icc','ice','circunferencia_carpo',
                   'albumina','pliegue_triccipital',
                     'obesidad_central','pliegue_biccipital',
                     'trigliceridos','pliegue_subescapular',
                     'c_HDL','pliegue_suprailiaco']
-        
-    
+
+class RequerimientoEnergeticoForm(forms.ModelForm):
+    class Meta:
+        model = Paciente
+        fields = ['formula','calorias_requeridas','calorias_a_planificar',
+                  'ingesta_calorica','adecuacion_ingesta','porcentaje_GET']   
             
         
+
+

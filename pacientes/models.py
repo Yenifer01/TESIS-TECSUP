@@ -11,7 +11,6 @@ class Paciente(models.Model):
     genero = models.CharField(
         max_length=10,
         choices=[('M', 'Masculino'), ('F', 'Femenino')],
-        default='M',
         verbose_name='Género', 
         null=False,
         blank=False)
@@ -202,13 +201,18 @@ class Paciente(models.Model):
     c_HDL = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='c-HDL')
     pliegue_suprailiaco = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Pliegue Suprailiaco(mm)')
 
-
-
-
-
-
-
-
+    #Requerimiento Energético 
+    formula = models.CharField(
+        choices=[('OMS','OMS'),('Harris Benedict','Harris Benedict')],
+        max_length=30,
+        verbose_name='Fórmula a Utilizar', 
+        null=False,
+        blank=False)
+    calorias_requeridas = models.IntegerField(verbose_name='Calorías Requeridas')
+    calorias_a_planificar = models.IntegerField(verbose_name='Calorías a Planificar')
+    ingesta_calorica = models.IntegerField(verbose_name='Ing. Calórica')
+    adecuacion_ingesta = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='% Adecuación Ingesta')
+    porcentaje_GET = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='%  Calorías a planificar = %GET')
 
 
     def __str__(self):
