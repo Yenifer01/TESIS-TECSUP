@@ -9,7 +9,7 @@ from .models import Paciente
 class DatosPersonalesForm(forms.ModelForm):
     class Meta:
         model = Paciente
-        fields = ['num_ficha', 'nombre', 'edad', 'genero', 'ocupacion']
+        fields = ['num_ficha', 'nombre', 'edad', 'genero', 'ocupacion','paciente_desea']
         widgets = {
             'num_ficha': forms.TextInput(attrs={'class': 'form-control column-field'}),
             'nombre': forms.TextInput(attrs={'class': 'form-control column-field'}),
@@ -61,11 +61,7 @@ class EvaluacionAntropometricaIIForm(forms.ModelForm):
                     'trigliceridos','pliegue_subescapular',
                     'c_HDL','pliegue_suprailiaco']
 
-class RequerimientoEnergeticoForm(forms.ModelForm):
-    class Meta:
-        model = Paciente
-        fields = ['formula','calorias_requeridas','calorias_a_planificar',
-                  'ingesta_calorica','adecuacion_ingesta','porcentaje_GET']   
+
             
         
 

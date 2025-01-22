@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'planes_dieteticos',
     'fa',
     'reportes',
     'pacientes',
@@ -57,6 +58,9 @@ MIDDLEWARE = [
 ]
 
 JAZZMIN_SETTINGS = {
+     "changeform_format_overrides": {
+        "planes_dieteticos.PlanDietetico": "vertical_tabs",  # Configura el modelo específico
+    },
     "related_modal_active": True,
     "custom_css": "css/admin_custom.css",
     "language_chooser": True,

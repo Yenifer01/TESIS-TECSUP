@@ -3,13 +3,13 @@ from .models import Paciente
 
 @admin.register(Paciente)
 class PacienteAdmin(admin.ModelAdmin):
-    list_display = ['num_ficha', 'nombre', 'edad', 'genero', 'ocupacion','calorias_requeridas','calorias_a_planificar']
+    list_display = ['num_ficha', 'nombre', 'edad', 'genero', 'ocupacion','estado']
     search_fields = ['num_ficha', 'nombre']
     list_filter = ['genero', 'ocupacion']
     exclude = ('num_ficha',)
     fieldsets = [
         ("Datos Personales", {
-            'fields': ('nombre', 'edad', 'genero', 'ocupacion'),
+            'fields': ('nombre', 'edad', 'genero', 'ocupacion','paciente_desea'),
             'classes': ('wide', 'extrapadding'),
         }),
         ("Hábitos", {
@@ -44,13 +44,6 @@ class PacienteAdmin(admin.ModelAdmin):
                 'circunferencia_carpo', 'albumina', 'pliegue_triccipital',
                 'obesidad_central', 'pliegue_biccipital', 'trigliceridos',
                 'pliegue_subescapular', 'c_HDL', 'pliegue_suprailiaco'
-            ),
-            'classes': ('wide', 'extrapadding'),
-        }),
-        ("Requerimiento Energético", {
-            'fields': (
-                'formula','calorias_requeridas','calorias_a_planificar',
-                'ingesta_calorica','adecuacion_ingesta','porcentaje_GET'
             ),
             'classes': ('wide', 'extrapadding'),
         }),

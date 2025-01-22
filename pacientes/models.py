@@ -23,6 +23,17 @@ class Paciente(models.Model):
             self.num_ficha = f"{prefijo}{self.id}"  
         super(Paciente, self).save(*args, **kwargs) 
 
+    paciente_desea = models.CharField(
+        choices=[('Ganar masa muscular','Ganar masa muscular'),('Perder Peso','Perder Peso'),
+                 ('Tener más energía','Tener más energía'),
+                ('Mejorar hábitos alimenticios','Mejorar hábitos alimenticios'),
+                ('Ganar músculo y perder grasa','Ganar músculo y perder grasa')
+                ],
+        max_length=60,
+        verbose_name='Paciente desea', 
+        null=False,
+        blank=False)
+
     # Hábitos
     alcohol = models.CharField(
          max_length=10,
@@ -201,18 +212,14 @@ class Paciente(models.Model):
     c_HDL = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='c-HDL')
     pliegue_suprailiaco = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Pliegue Suprailiaco(mm)')
 
+    estado = models.BooleanField(default=True,verbose_name="Estado")
+
     #Requerimiento Energético 
-    formula = models.CharField(
-        choices=[('OMS','OMS'),('Harris Benedict','Harris Benedict')],
-        max_length=30,
-        verbose_name='Fórmula a Utilizar', 
-        null=False,
-        blank=False)
-    calorias_requeridas = models.IntegerField(verbose_name='Calorías Requeridas')
-    calorias_a_planificar = models.IntegerField(verbose_name='Calorías a Planificar')
-    ingesta_calorica = models.IntegerField(verbose_name='Ing. Calórica')
-    adecuacion_ingesta = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='% Adecuación Ingesta')
-    porcentaje_GET = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='%  Calorías a planificar = %GET')
+    
+   
+    # ingesta_calorica = models.IntegerField(verbose_name='Ing. Calórica')
+    # adecuacion_ingesta = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='% Adecuación Ingesta')
+    # porcentaje_GET = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='%  Calorías a planificar = %GET')
 
 
     def __str__(self):

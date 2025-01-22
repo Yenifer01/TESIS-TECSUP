@@ -161,6 +161,8 @@ document.addEventListener('DOMContentLoaded', function () {
         tallaField.on('input change', calcularIce); 
         cinturaField.on('input change', calcularIce); 
     }
+
+    
     const edadField = $('#id_edad');
     const generoField = $('#id_genero');
     const fc_ActividadField = $('#id_fc_actividad');
@@ -228,7 +230,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         return 0;  
     }
-        // Función para calcular calorías requeridas
+    
+    // Función para calcular calorías requeridas
     function calorias_requeridas() {
         const formula = formulaField.val();
         const fc_actividad = parseFloat(fc_ActividadField.val());
@@ -242,35 +245,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    //Función para calcular la ingesta calórica
-    const pesoMesesField = $('#id_peso_6_meses');
-    const ingestaCaloricaField = document.querySelector('#id_ingesta_calorica');
-    function calcularIngestaCalorica() {
-        const calorias_requeridas_val = parseInt(caloriasRequeridasField.value); 
-        const pesoActual = parseFloat(pesoActualField.val());
-        const fc_actividad = parseFloat(fc_ActividadField.val());
-        const peso_meses = parseFloat(pesoMesesField.val());
-
-        if (!isNaN(pesoActual) && pesoActual > 0 && 
-            !isNaN(fc_actividad) && fc_actividad > 0 && 
-            !isNaN(peso_meses) && peso_meses > 0 && 
-            !isNaN(calorias_requeridas_val) && calorias_requeridas_val > 0) {
-            const ingesta = calorias_requeridas_val + (pesoActual - peso_meses) * (fc_actividad * 24);
-            ingestaCaloricaField.value = Math.round(ingesta); 
-        } else {
-            ingestaCaloricaField.value = ''; 
-        }
-    }
-
+    // Función para actualizar valores (solo actualiza calorías requeridas)
     function actualizarValores() {
-        calorias_requeridas(); 
-        setTimeout(() => {
-            calcularIngestaCalorica(); 
-        }, 50); 
+        calorias_requeridas();
     }
+
+    // Asociar los eventos solo para calcular calorías requeridas
     pesoActualField.on('input change', actualizarValores);
     fc_ActividadField.on('input change', actualizarValores);
     formulaField.on('input change', actualizarValores);
-    pesoMesesField.on('input change', calcularIngestaCalorica);
 
-});
+
+    });
