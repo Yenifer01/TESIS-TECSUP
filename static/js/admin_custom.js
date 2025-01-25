@@ -1,5 +1,18 @@
 
 document.addEventListener('DOMContentLoaded', function () {
+
+    const fieldsets = document.querySelectorAll("fieldset.module");
+    const icons = [
+        "fa-user", "fa-smoking", "fa-heartbeat", "fa-dumbbell", "fa-history", "fa-ruler", "fa-ruler-horizontal"
+    ];
+
+    fieldsets.forEach((fieldset, index) => {
+        const legend = fieldset.querySelector("h2");
+        if (legend) {
+            legend.innerHTML = `<i class="fas ${icons[index]}"></i> ${legend.innerHTML}`;
+        }
+    });
+    
     const tabacoField = $('#id_tabaco');  
     const numeroCigDiaField = document.querySelector('#id_numero_cig_dia'); 
     const fcActividadField = document.querySelector('#id_fc_actividad'); 

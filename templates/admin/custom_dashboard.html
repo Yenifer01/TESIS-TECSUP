@@ -1,6 +1,7 @@
 {% extends "admin/base_site.html" %}
+
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-0.5">
     <div class="row">
         <div class="col-md-4 col-12 mb-3">
             <div class="card h-100 rounded card-custom-border">
@@ -28,6 +29,63 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-4 col-12 mb-3">
+            <div class="card h-100 rounded card-custom-border">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div class="mb-3">
+                        <h5 class="card-title text-left text-muted"><strong>TOTAL DE PLANES DIETÉTICOS</strong></h5>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="display-4">{{ total_planes }}</span>
+                        <i class="fas fa-clipboard-list fa-3x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="row mt-2">
+        <div class="col-md-6 col-12 mb-2">
+            <div class="card h-auto rounded card-custom-border">
+                <div class="card-body">
+                    <div class="mb-3 text-center">
+                        <h5 class="card-title text-center text-muted"><strong>PACIENTES POR EDADES</strong></h5>
+                    </div>
+                    <div class="card-body graph-container">
+                        {{ graph_html|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-12 mb-2">
+            <div class="card h-auto rounded card-custom-border">
+                <div class="card-body">
+                    <div class="mb-3 text-center">
+                        <h5 class="card-title text-center text-muted"><strong>PACIENTES POR SEXO</strong></h5>
+                    </div>
+                    <div class="card-body graph-container">
+                        {{ pie_graph_html|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-12 col-12 mb-2">
+            <div class="card h-auto rounded card-custom-border">
+                <div class="card-body">
+                    <div class="mb-3 text-center">
+                        <h5 class="card-title text-center text-muted"><strong>PACIENTES MÁS FRECUENTES</strong></h5>
+                    </div>
+                    <div class="card-body graph-container">
+                        {{area_graph_html|safe}}
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 {% endblock %}

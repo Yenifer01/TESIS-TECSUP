@@ -39,7 +39,23 @@ table thead a {
     border-radius: 10px;      
 }
 
-/* ESTILOS */
+.text-center {
+    display: flex;
+    justify-content: center; 
+    align-items: center;    
+}
+.pie-chart-container {
+    margin-left: -20px; 
+}
+
+
+
+.graph-container {
+    height: 250px; 
+    width: 100%;   
+}
+
+/* ESTILOS  PARA EL FORM*/
 
 .custom-card-body {
     padding: 2rem; 
@@ -84,4 +100,6 @@ label {
     font-style: italic;
     font-size: 12px;
 }
+
+
 

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Paciente
+from django.utils.safestring import mark_safe
 
 @admin.register(Paciente)
 class PacienteAdmin(admin.ModelAdmin):
@@ -8,27 +9,27 @@ class PacienteAdmin(admin.ModelAdmin):
     list_filter = ['genero', 'ocupacion']
     exclude = ('num_ficha',)
     fieldsets = [
-        ("Datos Personales", {
+          (mark_safe("<i class='fas fa-user'></i> Datos Personales"), {
             'fields': ('nombre', 'edad', 'genero', 'ocupacion','paciente_desea'),
             'classes': ('wide', 'extrapadding'),
         }),
-        ("Hábitos", {
+         (mark_safe("<i class='fas fa-smoking'></i> Hábitos"), {
             'fields': ('alcohol', 'tabaco', 'numero_cig_dia'),
             'classes': ('wide', 'extrapadding'),
         }),
-        ("Funciones Biológicas", {
+        (mark_safe("<i class='fas fa-heartbeat'></i> Funciones Biológicas"), {
             'fields': ('apetito', 'horas_sueño', 'sed', 'peso_6_meses'),
             'classes': ('wide', 'extrapadding'),
         }),
-        ("Actividad Física Fuera del Trabajo(OMS)", {
+        (mark_safe ("<i class='fas fa-dumbbell'></i> Actividad Física Fuera del Trabajo(OMS)"), {
             'fields': ('tipo', 'intensidad', 'frecuencia', 'duracion', 'recomendacion', 'fc_actividad'),
             'classes': ('wide', 'extrapadding'),
         }),
-        ("Antecedentes Familiares y Personales", {
+        (mark_safe("<i class='fas fa-history'></i> Antecedentes Familiares y Personales"), {
             'fields': ('diabetes', 'enf_coronarias', 'hipertension', 'obesidad', 'dislipidemia'),
             'classes': ('wide', 'extrapadding'),
         }),
-        ("Evaluación Antropométrica I", {
+        (mark_safe ("<i class='fas fa-ruler'></i> Evaluación Antropométrica I"), {
             'fields': (
                 'peso_actual', 'talla', 'p_brazo_contraido', 'd_humero',
                 'p_pantorrilla', 'd_femur', 'pliegue_suprespinal',
@@ -38,7 +39,7 @@ class PacienteAdmin(admin.ModelAdmin):
             ),
             'classes': ('wide', 'extrapadding'),
         }),
-        ("Evaluación Antropométrica II", {
+        (mark_safe("<i class='fas fa-ruler-horizontal'></i> Evaluación Antropométrica II"), {
             'fields': (
                 'recto_leu', 'icc', 'ice',
                 'circunferencia_carpo', 'albumina', 'pliegue_triccipital',

@@ -1,4 +1,4 @@
-<!-- crear_alimento.html -->
+
 {% load static %}
 <html>
 <head>
@@ -10,7 +10,7 @@
             <form method="post">
                 {% csrf_token %}
                 
-                {{ form.as_p }}  <!-- Aquí Django renderiza automáticamente todos los campos del formulario -->
+                {{ form.as_p }}  
                 
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </form>

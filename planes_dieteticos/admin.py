@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from .models import *
 
 @admin.register(PlanDietetico)
@@ -15,6 +14,11 @@ class PlanDieteticoAdmin(admin.ModelAdmin):
         }),
         ("Requerimiento Energético", {
             'fields': ('formula', 'calorias_requeridas', 'calorias_a_planificar'),
+            'classes': ('wide', 'extrapadding'),
+        }),
+
+        ("Distribución de Macronutrientes", {
+            'fields': ('estado',),
             'classes': ('wide', 'extrapadding'),
         }),
     ]
