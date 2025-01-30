@@ -4,6 +4,8 @@ from django.shortcuts import render
 from rest_framework import generics
 from .models import *
 from .serializers import *
+import openpyxl
+from django.http import HttpResponse
 # Vistas para Cliente
 
 class PacienteListCreateView(generics.ListCreateAPIView):
@@ -13,3 +15,4 @@ class PacienteListCreateView(generics.ListCreateAPIView):
 class PacienteDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Paciente.objects.all()
     serializer_class = PacienteSerializer 
+

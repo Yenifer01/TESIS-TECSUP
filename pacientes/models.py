@@ -190,7 +190,6 @@ class Paciente(models.Model):
 
     ice = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='ICE: ♂ ♀ > 0.5')
   
-    #Falta 
     circunferencia_carpo = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Circunferencia del Carpo (cm)')
 
     albumina = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Albumina (g/dL)')
@@ -213,14 +212,6 @@ class Paciente(models.Model):
     pliegue_suprailiaco = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Pliegue Suprailiaco(mm)')
 
     estado = models.BooleanField(default=True,verbose_name="Estado")
-
-    #Requerimiento Energético 
-    
-   
-    # ingesta_calorica = models.IntegerField(verbose_name='Ing. Calórica')
-    # adecuacion_ingesta = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='% Adecuación Ingesta')
-    # porcentaje_GET = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='%  Calorías a planificar = %GET')
-
 
     def __str__(self):
             return self.nombre

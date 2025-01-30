@@ -48,8 +48,6 @@ table thead a {
     margin-left: -20px; 
 }
 
-
-
 .graph-container {
     height: 250px; 
     width: 100%;   
@@ -100,6 +98,39 @@ label {
     font-style: italic;
     font-size: 12px;
 }
+
+/* ESTILOS PARA EL BOTÓN DE EXPORTAR */
+
+.export_link {
+    display: inline-block;
+    color: #fff !important;
+    background-color: #28a745; 
+    border-color: #28a745;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+   
+}
+.export_link:before {
+    content: "\f019";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-right: 0.5rem;
+}
+.export_link:hover,
+.export_link:focus {
+    color: #fff;
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+
+
+
+
 
 
 

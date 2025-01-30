@@ -1,18 +1,52 @@
 
 document.addEventListener('DOMContentLoaded', function () {
-
-    const fieldsets = document.querySelectorAll("fieldset.module");
-    const icons = [
-        "fa-user", "fa-smoking", "fa-heartbeat", "fa-dumbbell", "fa-history", "fa-ruler", "fa-ruler-horizontal"
-    ];
-
-    fieldsets.forEach((fieldset, index) => {
-        const legend = fieldset.querySelector("h2");
-        if (legend) {
-            legend.innerHTML = `<i class="fas ${icons[index]}"></i> ${legend.innerHTML}`;
+    const modalController = {
+        openModal: (modalId) => {
+            modalController.scrollPosition = window.scrollY;
+            
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = "block";
+            }
+        },
+        closeModal: (modalId) => {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = "none";
+            }
+            
+            window.scrollTo(0, modalController.scrollPosition);
+        },
+        closeModalOnOutsideClick: (event, modalId) => {
+            const modal = document.getElementById(modalId);
+            if (event.target === modal) {
+                modalController.closeModal(modalId);
+            }
         }
-    });
+    };
+    function setupModal(modalId, openButtonId, closeButtonClass) {
+        const openModalButton = document.getElementById(openButtonId);
+        if (openModalButton) {
+            openModalButton.addEventListener("click", () => modalController.openModal(modalId));
+        }
     
+        const closeModalButton = document.querySelector(`#${modalId} .${closeButtonClass}`);
+        if (closeModalButton) {
+            closeModalButton.addEventListener("click", () => modalController.closeModal(modalId));
+        }
+    
+        window.addEventListener("click", (event) => modalController.closeModalOnOutsideClick(event, modalId));
+    }
+    setupModal("modalIndicePonderal", "indicePonderalInfo", "close");
+    setupModal("modalPesoIdeal", "pesoIdealInfo", "close");
+    setupModal("modalImc", "imcInfo", "close");
+    setupModal("modalTipoObesidad", "TipoObesidadInfo", "close");
+    setupModal("modalIcc", "iccInfo", "close");
+    setupModal("modalIce", "iceInfo", "close");
+    
+
+
+    //Funcionalidad para calcular el número de cigarrillos 
     const tabacoField = $('#id_tabaco');  
     const numeroCigDiaField = document.querySelector('#id_numero_cig_dia'); 
     const fcActividadField = document.querySelector('#id_fc_actividad'); 
@@ -35,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
     
-    //Función para calcular intensidad 
+    //Funcionalidad  para calcular la intensidad 
     const intensidadField = $('#id_intensidad');
     const recomendacionField = document.querySelector('#id_recomendacion');
 
@@ -60,6 +94,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const pesoActualField = $('#id_peso_actual'); 
     const tallaField = $('#id_talla'); 
     const indicePonderalField = document.querySelector('#id_indice_ponderal'); 
+    const modalIndiceP = document.querySelector('#modalIndiceP');
+    
     if (pesoActualField.length && tallaField.length && indicePonderalField) {
         function calcularIndicePonderal() {
             const pesoActual = parseFloat(pesoActualField.val()); 
@@ -69,6 +105,30 @@ document.addEventListener('DOMContentLoaded', function () {
     
                 const indicePonderal = (talla * 100) / Math.cbrt(pesoActual);
                 indicePonderalField.value = indicePonderal.toFixed(2); 
+                
+
+
+                const contenidoModal = `
+                <h6>Detalles del Cálculo:</h6>
+                <div>
+                    <p><strong>Valores:</strong></p>
+                    <ul style="list-style-type: disc; padding-left: 20px;">
+                        <li><strong>Peso Actual:</strong> ${pesoActual} kg</li>
+                        <li><strong>Talla:</strong> ${talla.toFixed(2)} m</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Cálculo:</strong></p>
+                    <p>(${talla.toFixed(2)} * 100) / ∛(${pesoActual}) = <strong>${indicePonderal.toFixed(2)}</strong></p>
+                </div>
+                <div>
+                    <p><strong>Índice Ponderal:</strong> <span style="font-weight: bold; color: #343a40;">${indicePonderal.toFixed(2)}</span></p>
+                </div>
+            `;
+            if (modalIndiceP) {
+                modalIndiceP.innerHTML = contenidoModal;
+            }
+
             } else {
                 indicePonderalField.value = ''; 
             }
@@ -77,8 +137,11 @@ document.addEventListener('DOMContentLoaded', function () {
         tallaField.on('input change', calcularIndicePonderal); 
     }
     
+
+
     // Función para calcular el peso ideal IMC = 22.4
     const pesoIdealField = $('#id_peso_ideal');
+    const modalPesoI = document.querySelector('#modalPesoI');
 
     if (tallaField.length && pesoIdealField.length) {
         tallaField.on('input change', function () {
@@ -87,22 +150,69 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!isNaN(talla) && talla > 0) {
                 const pesoIdeal = talla * talla * 22.4;
                 pesoIdealField.val(pesoIdeal.toFixed(2)); 
+
+                const contenidoModal = `
+                <h6>Detalles del Cálculo:</h6>
+                <div>
+                    <p><strong>Valores:</strong></p>
+                    <ul style="list-style-type: disc; padding-left: 20px;">
+                        <li><strong>Talla:</strong> ${talla.toFixed(2)} m</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Cálculo:</strong></p>
+                    <p>(${talla.toFixed(2)} * ${talla.toFixed(2)})*22.4 = <strong>${pesoIdeal.toFixed(2)}</strong></p>
+                </div>
+                <div>
+                    <p><strong>Peso Ideal:</strong> <span style="font-weight: bold; color: #343a40;">${pesoIdeal.toFixed(2)}</span></p>
+                </div>
+            `;
+            if (modalPesoI) {
+                modalPesoI.innerHTML = contenidoModal;
+            }
+
             } else {
                 pesoIdealField.val(''); 
             }
         });
     }
      // Función para calcular el IMC y clasificar el tipo de obesidad
-     const imcField = $('#id_imc');
-     const tipoObesidadField = $('#id_tipo_obesidad'); 
+    const imcField = $('#id_imc');
+    const tipoObesidadField = $('#id_tipo_obesidad'); 
+    const modalIMC = document.querySelector('#modalIMC');
+    const modalTipo = document.querySelector('#modalTipo');
  
      if (pesoActualField.length && tallaField.length && imcField.length && tipoObesidadField.length) {
          function calcularIMC() {
              const pesoActual = parseFloat(pesoActualField.val()); 
              const talla = parseFloat(tallaField.val()); 
              if (!isNaN(pesoActual) && pesoActual > 0 && !isNaN(talla) && talla > 0) {
-                 const imc = pesoActual / (talla * talla);
-                 imcField.val(imc.toFixed(2)); 
+                const imc = pesoActual / (talla * talla);
+                imcField.val(imc.toFixed(2)); 
+
+                const contenidoIMC = `
+                    <h6>Detalles del Cálculo:</h6>
+                    <div>
+                        <p><strong>Valores:</strong></p>
+                        <ul style="list-style-type: disc; padding-left: 20px;">
+                            <li><strong>Peso:</strong> ${pesoActual} kg</li>
+                            <li><strong>Talla:</strong> ${talla.toFixed(2)} m</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p><strong>Cálculo:</strong></p>
+                        <p>${pesoActual} / (${talla.toFixed(2)} * ${talla.toFixed(2)}) = <strong>${imc.toFixed(2)}</strong></p>
+                    </div>
+                    <div>
+                        <p><strong>Índice de Masa Corporal (IMC):</strong> 
+                        <span style="font-weight: bold; color: #343a40;">${imc.toFixed(2)}</span></p>
+                    </div>
+                `;
+                if (modalIMC) {
+                    modalIMC.innerHTML = contenidoIMC;
+                }
+
+
                  clasificarIMC(imc); 
              } else {
                  imcField.val(''); 
@@ -130,7 +240,31 @@ document.addEventListener('DOMContentLoaded', function () {
                      break;
                  }
              }
+
              tipoObesidadField.val(categoria); 
+
+             const contenidoTipoObesidad = `
+                <h6>Clasificación del IMC:</h6>
+                <div>
+                    <p><strong>IMC (OMS):</strong> <span style="font-weight: bold; color: #343a40;">${imc.toFixed(2)}</span></p>
+                </div>
+                <div>
+                    <p><strong>Clasificación IMC:</strong></p>
+                    <ul style="list-style-type: disc; padding-left: 20px;">
+                        <li>< 16: <span style="color: red;">Delgadez Severa</span></li>
+                        <li>16 - 16.9: <span style="color: orange;">Delgadez Moderada</span></li>
+                        <li>17 - 18.4: <span style="color: yellow;">Delgadez Leve</span></li>
+                        <li>18.5 - 24.9: <span style="color: green;">Normo peso</span></li>
+                        <li>25 - 29.9: <span style="color: orange;">Pre-obesidad (Sobrepeso)</span></li>
+                        <li>30 - 34.9: <span style="color: red;">Obesidad Clase I</span></li>
+                        <li>35 - 39.9: <span style="color: darkred;">Obesidad Clase II</span></li>
+                        <li>≥ 40: <span style="color: darkred; font-weight: bold;">Obesidad Clase III</span></li>
+                    </ul>
+                </div>
+            `;
+            if (modalTipo) {
+                modalTipo.innerHTML = contenidoTipoObesidad;
+            }
          }
  
          pesoActualField.on('input change', calcularIMC); 
@@ -141,6 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cinturaField = $('#id_cintura'); 
     const caderaField = $('#id_cadera'); 
     const iccField = document.querySelector('#id_icc'); 
+    const modalicc = document.querySelector('#modalicc');
     if (cinturaField.length && caderaField.length && iccField) {
         function calcularIcc() {
             const cintura = parseFloat(cinturaField.val()); 
@@ -149,8 +284,28 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!isNaN(cintura) && cintura > 0 && !isNaN(cadera) && cadera > 0) {
                 const icc = cintura/cadera
                 iccField.value = icc.toFixed(2); 
+                const contenidoModal = `
+                <h6>Detalles del Cálculo:</h6>
+                <div>
+                    <p><strong>Valores:</strong></p>
+                    <ul style="list-style-type: disc; padding-left: 20px;">
+                        <li><strong>Cintura:</strong> ${cintura} cm</li>
+                        <li><strong>Cadera:</strong> ${cadera} cm</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Cálculo:</strong></p>
+                    <p>(${cintura} /${cadera})= <strong>${icc.toFixed(2)}</strong></p>
+                </div>
+                <div>
+                    <p><strong>ICC:</strong> <span style="font-weight: bold; color: #343a40;">${icc.toFixed(2)}</span></p>
+                </div>
+            `;
+            if (modalicc) {
+                modalicc.innerHTML = contenidoModal;
+            }
             } else {
-                indicePonderalField.value = ''; 
+                iccField.value = ''; 
             }
         }
         cinturaField.on('input change', calcularIcc); 
@@ -159,6 +314,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Función para calcular  ICE
     const iceField = $('#id_ice');
+    const modalice = document.querySelector('#modalice');
     if (tallaField.length && cinturaField.length && iceField.length) {
         function calcularIce() {
             const talla = parseFloat(tallaField.val()); 
@@ -167,6 +323,28 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!isNaN(talla) && talla > 0 && !isNaN(cintura) && cintura > 0) {
                 const ice = cintura / (talla * 100); 
                 iceField.val(ice.toFixed(2)); 
+
+                const contenidoModal = `
+                <h6>Detalles del Cálculo:</h6>
+                <div>
+                    <p><strong>Valores:</strong></p>
+                    <ul style="list-style-type: disc; padding-left: 20px;">
+                        <li><strong>Talla:</strong> ${talla.toFixed(2)} m</li>
+                        <li><strong>Cintura:</strong> ${cintura} cm</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Cálculo:</strong></p>
+                    <p>(${cintura} /${talla.toFixed(2)})= <strong>${ice.toFixed(2)}</strong></p>
+                </div>
+                <div>
+                    <p><strong>ICE:</strong> <span style="font-weight: bold; color: #343a40;">${ice.toFixed(2)}</span></p>
+                </div>
+            `;
+            if (modalice) {
+                modalice.innerHTML = contenidoModal;
+            }
+
             } else {
                 iceField.val(''); 
             }
@@ -174,99 +352,5 @@ document.addEventListener('DOMContentLoaded', function () {
         tallaField.on('input change', calcularIce); 
         cinturaField.on('input change', calcularIce); 
     }
-
-    
-    const edadField = $('#id_edad');
-    const generoField = $('#id_genero');
-    const fc_ActividadField = $('#id_fc_actividad');
-    const formulaField = $('#id_formula');
-    const caloriasRequeridasField = document.querySelector('#id_calorias_requeridas');
-
-    // Función para calcular OMS
-    function calcularOMS() {
-        const edad = parseInt(edadField.val());
-        const genero = generoField.val();
-        const pesoActual = parseFloat(pesoActualField.val());
-
-        if (!isNaN(pesoActual) && pesoActual > 0 && !isNaN(edad) && edad > 0 && genero) {
-            let oms = 0;
-
-            if (genero === 'M') {
-                if (edad >= 0 && edad <= 3) {
-                    oms = 60.9 * pesoActual + (-0.97);
-                } else if (edad >= 3 && edad <= 10) {
-                    oms = 22.7 * pesoActual + 495;
-                } else if (edad >= 10 && edad <= 18) {
-                    oms = 17.5 * pesoActual + 651;
-                } else if (edad >= 18 && edad <= 30) {
-                    oms = 15.3 * pesoActual + 679;
-                } else if (edad >= 30 && edad <= 60) {
-                    oms = 11.6 * pesoActual + 879;
-                } else if (edad > 60) {
-                    oms = 10.5 * pesoActual + 596;
-                }
-            } else if (genero === 'F') {
-                if (edad >= 0 && edad <= 3) {
-                    oms = 61 * pesoActual + (-51);
-                } else if (edad >= 3 && edad <= 10) {
-                    oms = 22.5 * pesoActual + 499;
-                } else if (edad >= 10 && edad <= 18) {
-                    oms = 12.2 * pesoActual + 746;
-                } else if (edad >= 18 && edad <= 30) {
-                    oms = 14.7 * pesoActual + 496;
-                } else if (edad >= 30 && edad <= 60) {
-                    oms = 8.7 * pesoActual + 829;
-                } else if (edad > 60) {
-                    oms = 10.5 * pesoActual + 596;
-                }
-            }
-            return oms;
-        }
-        return 0;
-    }
-
-        // Función para calcular Harris-Benedict (TMB)
-    function calcularHarrisBenedict() {
-        const edad = parseInt(edadField.val());
-        const genero = generoField.val();
-        const pesoActual = parseFloat(pesoActualField.val());
-        const altura = parseFloat(tallaField.val());  
-
-        if (!isNaN(pesoActual) && pesoActual > 0 && !isNaN(edad) && edad > 0 && !isNaN(altura) && altura > 0 && genero) {
-            let tmb = 0;
-            if (genero === 'M') {
-                tmb = 66.473 + (13.751 * pesoActual) + (5.0033 * (altura*100)) - (6.55 * edad);
-            } else if (genero === 'F') {
-                tmb = 655.1 + (9.463 * pesoActual) + (1.8 * (altura*100)) - (4.6756 * edad);
-            }
-            return tmb;
-        }
-        return 0;  
-    }
-    
-    // Función para calcular calorías requeridas
-    function calorias_requeridas() {
-        const formula = formulaField.val();
-        const fc_actividad = parseFloat(fc_ActividadField.val());
-
-        if (formula === 'OMS' && !isNaN(fc_actividad)) {
-            const calorias = calcularOMS() * fc_actividad;
-            caloriasRequeridasField.value = Math.round(calorias);
-        } else if (formula === 'Harris Benedict' && !isNaN(fc_actividad)) {
-            const calorias = calcularHarrisBenedict() * fc_actividad;
-            caloriasRequeridasField.value = Math.round(calorias);
-        }
-    }
-
-    // Función para actualizar valores (solo actualiza calorías requeridas)
-    function actualizarValores() {
-        calorias_requeridas();
-    }
-
-    // Asociar los eventos solo para calcular calorías requeridas
-    pesoActualField.on('input change', actualizarValores);
-    fc_ActividadField.on('input change', actualizarValores);
-    formulaField.on('input change', actualizarValores);
-
 
     });
