@@ -22,12 +22,16 @@ def obtener_datos_paciente(request, paciente_id):
     fc_actividad = paciente.fc_actividad
     peso = paciente.peso_actual
     talla = paciente.talla
+    peso_6_meses = paciente.peso_6_meses
     return JsonResponse({
         'paciente_desea': paciente_desea,
         'edad': edad,
         'genero': genero,
         'fc_actividad': fc_actividad,
         'peso': peso,
-        'talla': talla
+        'talla': talla,
+        'peso_6_meses':peso_6_meses
+
+
     })
     

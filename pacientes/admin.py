@@ -158,7 +158,7 @@ class PacienteAdmin(ExportMixin, admin.ModelAdmin):
     ]
    
     class Media:
-        js = ('js/admin_custom.js',)
+        js = ('js/pacientes.js',)
         css = {
         'all': ('css/pacientes.css',)
         }

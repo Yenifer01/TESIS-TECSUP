@@ -71,7 +71,6 @@ class MyCustomDashboard(View):
         pie_graph_html = pie_fig.to_html(full_html=False, config=pie_config)
 
         # Gráfico de Area
-    
         pacientes_frecuentes = PlanDietetico.objects.values('paciente').annotate(frequency=Count('paciente')).order_by('-frequency')
         patient_names = []
         frequencies = []

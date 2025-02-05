@@ -1,0 +1,250 @@
+
+/* Contenedor de los formularios */
+.form-group .row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.form-group label {
+    flex: 1;
+    text-align: right; 
+    padding-right: 10px; 
+    font-weight: bold;
+}
+
+.form-group > .row > div {
+    flex: 2; 
+}
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    .form-group .row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-group label {
+        text-align: left;
+        padding-bottom: 5px;
+    }
+}
+#tabla-macronutrientes {
+    width: 100%;
+    max-width: 100%;
+    margin: 20px auto;
+    border-radius: 10px;
+    overflow: hidden; 
+}
+
+#tabla-macronutrientes table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+}
+
+#tabla-macronutrientes table th {
+    background-color: #20c997; 
+    color: #ffffff;
+    padding: 14px;
+    font-weight: bold;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #145c40;
+}
+
+#tabla-macronutrientes table td {
+    padding: 14px;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+}
+
+#tabla-macronutrientes table tr:nth-child(even) {
+    background-color: #f9f9f9; 
+}
+
+#tabla-macronutrientes table tr:hover {
+    background-color: rgba(25, 135, 84, 0.1);
+    transition: background-color 0.3s ease-in-out;
+}
+
+
+#tabla-macronutrientes table tr:last-child {
+    font-weight: bold;
+    background-color: #ffc107; 
+    color: #333;
+}
+
+
+#tabla-macronutrientes table tr:last-child td {
+    font-size: 14px;
+    padding: 14px;
+}
+
+#tabla-macronutrientes table td strong {
+    color: #198754; 
+}
+
+#tabla-macronutrientes table th,
+#tabla-macronutrientes table td {
+    border: 1px solid #dee2e6;
+}
+
+#tabla-macronutrientes table td:first-child,
+#tabla-macronutrientes table th:first-child {
+    border-left: none;
+}
+
+@media (max-width: 768px) {
+    #tabla-macronutrientes {
+        overflow-x: auto;
+        display: block;
+    }
+    
+    #tabla-macronutrientes table {
+        font-size: 13px;
+    }
+
+    #tabla-macronutrientes table td,
+    #tabla-macronutrientes table th {
+        padding: 10px;
+    }
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;  
+    height: 25px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 25px;
+}
+
+.slider::before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #20c997; 
+}
+
+input:checked + .slider::before {
+    transform: translateX(25px);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 30px; 
+}
+.modal-content {
+    position: relative;
+    background: white;
+    width: 65%; 
+    max-width: 700px; 
+    max-height: auto; 
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+    margin: auto;
+    overflow-y: auto; 
+}
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#cerrar-modal {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 20px;
+    border: none;
+    background: #d9534f;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+#cerrar-modal:hover {
+    background: #c9302c;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+.resumen-macros {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.resumen-macros h3 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.resumen-macros span {
+    font-size: 14px;
+    color: #777;
+}
+

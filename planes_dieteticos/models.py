@@ -17,9 +17,15 @@ class PlanDietetico(models.Model):
     calorias_a_planificar = models.IntegerField(verbose_name='Calorías a Planificar')
     fecha_inicio = models.DateField(verbose_name='Fecha de Inicio')
     fecha_fin = models.DateField(verbose_name='Fecha de Término')
-
     estado = models.BooleanField(default=True,verbose_name="Estado")
 
+    porcentaje_proteina = models.FloatField(verbose_name='Proteína (%)')
+    porcentaje_carbohidrato = models.FloatField(verbose_name='Carbohidratos (%)')
+    porcentaje_grasa = models.FloatField(verbose_name='Grasa (%)')
+
+  
+
+    
     def __str__(self):
             return self.nombre_plan
 

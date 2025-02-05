@@ -61,7 +61,7 @@ MIDDLEWARE = [
 
 JAZZMIN_SETTINGS = {
      "changeform_format_overrides": {
-        "planes_dieteticos.PlanDietetico": "vertical_tabs", 
+        "planes_dieteticos.PlanDietetico": "horizontal_tabs", 
         "pacientes.Paciente":"vertical_tabs" 
     },
     "related_modal_active": True,
@@ -88,7 +88,6 @@ JAZZMIN_SETTINGS = {
             }
         ]
     },
-
     "topmenu_links": [
         {"name": "Inicio", "url": "/", "permissions": ["auth.view_user"]},
         {"name": "Dashboard", "url": "/admin/", "permissions": ["auth.view_user"]},
