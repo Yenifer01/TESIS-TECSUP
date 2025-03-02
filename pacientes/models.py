@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ValidationError
 
 # Create your models here.
 
@@ -22,17 +23,6 @@ class Paciente(models.Model):
             prefijo = "EAMA"
             self.num_ficha = f"{prefijo}{self.id}"  
         super(Paciente, self).save(*args, **kwargs) 
-
-    paciente_desea = models.CharField(
-        choices=[('Ganar masa muscular','Ganar masa muscular'),('Perder Peso','Perder Peso'),
-                 ('Tener más energía','Tener más energía'),
-                ('Mejorar hábitos alimenticios','Mejorar hábitos alimenticios'),
-                ('Ganar músculo y perder grasa','Ganar músculo y perder grasa')
-                ],
-        max_length=60,
-        verbose_name='Paciente desea', 
-        null=False,
-        blank=False)
 
     # Hábitos
     alcohol = models.CharField(
@@ -162,7 +152,7 @@ class Paciente(models.Model):
 
     d_femur = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='D. Femur (cm)')
 
-    pliegue_suprespinal = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='Pliegue Suprespinal(mm)')
+    pliegue_suprespinal = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='Pliegue Supraespinal(mm)')
 
     pliegue_pantorilla = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='Pliegue  Pantorilla(mm)')
 
@@ -218,3 +208,110 @@ class Paciente(models.Model):
 
     class Meta:
             verbose_name_plural = "Pacientes"
+
+
+class ActividadMetabolica(models.Model):
+    id = models.AutoField(primary_key=True)
+    actividades_metabolicas = models.CharField(max_length=50, verbose_name= 'Actividad Metabólica')
+    coeficiente = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Coeficiente')
+
+    def __str__(self):
+            return self.actividades_metabolicas
+
+    class Meta:
+            verbose_name_plural = "Actividades Metabólicas"
+
+
+class ActividadFuncional(models.Model):
+    id = models.AutoField(primary_key=True)
+    actividades_funcionales = models.CharField(max_length=50, verbose_name= 'Actividades Funcionales Cotidianas')
+    coeficiente = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Coeficiente')
+
+    def __str__(self):
+            return self.actividades_funcionales
+    class Meta:
+            verbose_name_plural = "Actividades Funcionales Cotidianas"
+
+class Fa(models.Model):
+    id = models.AutoField(primary_key=True)
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+    formula = models.CharField(
+        choices=[('OMS','OMS'),('Harris Benedict','Harris Benedict'),('Schofield','Schofield')],
+        max_length=30,
+        verbose_name='Elige una fórmula', 
+        null=False,
+        blank=False)
+    factor_por = models.CharField(
+        choices=[('Dia','Día'),('Semana','Semana')],
+        max_length=30,
+        verbose_name='Factor Por', 
+        null=False,
+        blank=False)
+    
+    actividades_metabolicas = models.ManyToManyField(
+        ActividadMetabolica,
+        through='FaActividadMetabolica',
+        related_name='fa_metabolicas'
+    )
+
+    actividades_funcionales = models.ManyToManyField(
+        ActividadFuncional,
+        through='FaActividadFuncional',
+        related_name='fa_funcionales'
+    )
+    
+    def __str__(self):
+        return f"{self.paciente} - {self.formula}"
+
+    class Meta:
+            verbose_name_plural = "Factor de Actividad por TMB y Peso"
+ 
+
+class FaActividadMetabolica(models.Model):
+    fa = models.ForeignKey(Fa, on_delete=models.CASCADE, related_name="fa_actividades_metabolicas")
+    actividad = models.ForeignKey(ActividadMetabolica, on_delete=models.CASCADE, related_name="actividades_metabolicas_fa")  # 🔹 Se añadió related_name
+    cantidad_horas = models.IntegerField(verbose_name="Cantidad de Horas")
+    horas_totales = models.IntegerField(verbose_name="Horas Totales")
+    total_horas = models.IntegerField(verbose_name="Total Horas")
+    fraccion_tiempo = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Fracción de Tiempo")
+    coeficiente = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Coeficiente")
+    subfactor = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Subfactor")
+    reb = models.IntegerField(verbose_name='REB')
+    energia_actividad = models.IntegerField(verbose_name='Energía x Actividad')
+    
+    def __str__(self):
+        return f"{self.actividad} - Cantidad: {self.cantidad_horas}"
+
+    class Meta:
+        verbose_name_plural = "Gasto energético Total.(Factor de Actividad vs TMB)"
+
+
+class FaActividadFuncional(models.Model):
+    fa = models.ForeignKey(Fa, on_delete=models.CASCADE, related_name="fa_actividades_funcionales")
+    actividad = models.ForeignKey(ActividadFuncional, on_delete=models.CASCADE, related_name="actividades_funcionales_fa")  # 🔹 Se añadió related_name
+    cantidad_horas = models.IntegerField(verbose_name="Cantidad de Horas")
+    horas_totales = models.IntegerField(verbose_name="Horas Totales")
+    total_horas = models.IntegerField(verbose_name="Total Horas")
+    coeficiente = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Coeficiente")
+    energia_actividad = models.IntegerField(verbose_name='Energía x Actividad')
+   
+    def __str__(self):
+        return f"{self.actividad} - Cantidad: {self.cantidad_horas}"
+
+    class Meta:
+        verbose_name_plural = "Gasto energético Total. (Peso vs Factor de actividad)"
+
+
+class ResumenTmbPeso(models.Model):
+    fa = models.OneToOneField(Fa, on_delete=models.CASCADE, related_name="fa_resumen")
+    total_calorias_actividad_tmb = models.IntegerField(verbose_name="Total Kcal(Actividad vs TMB)")
+    coeficiente_actividad_tmb = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="CAF(Actividad vs TMB)")
+    total_calorias_peso_actividad = models.IntegerField(verbose_name="Total Kcal(Peso vs Actividad)")
+    coeficiente_peso_actividad = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="CAF(Peso vs Actividad)")
+    
+    def __str__(self):
+        return f"{self.fa}"
+
+    class Meta:
+        verbose_name_plural = "Resumen"
+

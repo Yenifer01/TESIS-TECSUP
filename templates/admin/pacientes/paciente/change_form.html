@@ -10,6 +10,10 @@
 {% block extrahead %}
     {{ block.super }}
     <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var imagenURL = "{% static 'images/somatocarta2.png' %}";
+    </script>
     {{ media }}
 {% endblock %}
 
@@ -70,13 +74,53 @@
                 {% if to_field %}<input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">{% endif %}
 
                 {% block field_sets %}
-                    <div class="col-6 col-lg-9">
+                    <div class="col-12 col-sm-8 col-md-9">
                         <div class="card">
                             <div class="card-body">
                                 {% get_changeform_template adminform as changeform_template %}
                                 {% include changeform_template %}
                             </div>
                         </div>
+
+                        {% if add %}
+                        <div class="card shadow-sm border-warning">
+                            <div class="card-body">
+                                <p class="text-center font-weight-bold">SOMATOCARTA INDIVIDUAL</p>
+                                <div class="mensaje-inicial">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa-solid fa-circle-exclamation text-warning mr-2" style="font-size: 1.5rem;"></i>
+                                        <span class="text-dark fw-bold">Se necesitan agregar diferentes pliegues y medidas para poder visualizar el somatotipo.</span>
+                                    </div>                                
+                                    <hr>
+                                    <p class="fw-bold">Se necesitan las siguientes medidas:</p>
+                                    <ul class="ms-3">
+                                        <li>Peso</li>
+                                        <li>Talla</li>
+                                        <li>Pliegue tricipital</li>
+                                        <li>Pliegue subescapular</li>
+                                        <li>Pliegue supraespinal</li>
+                                        <li>Pliegue pantorrilla</li>
+                                        <li>Diámetro del húmero</li>
+                                        <li>Diámetro del fémur</li>
+                                        <li>Perímetro del brazo  contraido</li>
+                                        <li>Perímetro de la pantorrilla</li>
+                                    </ul>
+                                </div>
+                                <div id="grafico-somatocarta" class="centrar-grafico" style="display: none;">
+                                    <canvas id="grafico-somatocarta-individual" width="360" height="360"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if not add %}
+                        <div class="card">
+                            <div class="card-body text-center centrar-grafico">
+                                <p class="text-center font-weight-bold">SOMATOCARTA INDIVIDUAL</p>
+                                <canvas id="grafico" width="360" height="360"></canvas>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                 {% endblock %}
                 
@@ -86,19 +130,19 @@
 
                 {% block after_related_objects %}{% endblock %}
 
-                <div class="col-12 col-lg-3">
+                <div class="col-12 col-sm-4 col-md-3">
                     <div id="jazzy-actions" class="{{ jazzmin_ui.actions_classes }}">
                         {% block submit_buttons_bottom %}
                             {% submit_row %}
                             <div class="form-actions">
-                                <button type="button" class="btn btn-danger form-control" onclick="window.history.back();">
+                                <button type="button" class="btn btn-warning form-control text-white" onclick="window.history.back();">
                                     {% trans "Cancelar" %}
                                 </button>
                             </div>
                             {% block object-tools %}
                                 {% if change %}
                                     {% if not is_popup %}
-                                        <div class="object-tools">
+                                        <div class="object-tools mt-2">
                                             {% block object-tools-items %}
                                                 {% change_form_object_tools %}
                                                 {% block extra_actions %}{% endblock %}
@@ -109,12 +153,37 @@
                             {% endblock %}
                         {% endblock %}
                     </div>
+                    <div class="card mt-3">
+                        <div class="card-body"></div>
+                        <img src="/static/images/perimetros.png" alt="Perímetros" onclick="ampliarImagen(this)">
+                    </div>  
+                    
+                    <div class="card mt-2">
+                        <div class="card-body"></div>
+                        <img src="/static/images/pliegues.png"alt="Pliegues" onclick="ampliarImagen(this)">
+                    </div> 
+                    
+                    <div class="overlay" id="overlay" onclick="cerrarImagen()">
+                        <img id="imagen-ampliada" src="" alt="Imagen ampliada">
+                    </div>
+
+                    <script>
+                        function ampliarImagen(imagen) {
+                            const overlay = document.getElementById('overlay');
+                            const imagenAmpliada = document.getElementById('imagen-ampliada');
+                            imagenAmpliada.src = imagen.src;
+                            overlay.classList.add('active');
+                        }
+                        function cerrarImagen() {
+                            const overlay = document.getElementById('overlay');
+                            overlay.classList.remove('active');
+                        }
+                    </script>
                 </div>
 
                 {% block admin_change_form_document_ready %}
                     <script type="text/javascript" id="django-admin-form-add-constants" src="{% static 'admin/js/change_form.js' %}" {% if adminform and add %}data-model-name="{{ opts.model_name }}"{% endif %}></script>
                 {% endblock %}
-
                 {% prepopulated_fields_js %}
             </div>
         </form>

@@ -4,12 +4,12 @@ from django import forms
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-from .models import Paciente
+from .models import *
 
 class DatosPersonalesForm(forms.ModelForm):
     class Meta:
         model = Paciente
-        fields = ['num_ficha', 'nombre', 'edad', 'genero', 'ocupacion','paciente_desea']
+        fields = ['num_ficha', 'nombre', 'edad', 'genero', 'ocupacion']
 
        
 
@@ -55,8 +55,50 @@ class EvaluacionAntropometricaIIForm(forms.ModelForm):
                     'trigliceridos','pliegue_subescapular',
                     'c_HDL','pliegue_suprailiaco']
 
+class ActividadMetabolicaForm(forms.ModelForm):
+    class Meta:
+        model = ActividadMetabolica
+        fields = '__all__'
 
-            
+class ActividadFuncionalForm(forms.ModelForm):
+    class Meta:
+        model = ActividadFuncional
+        fields = '__all__'
+
+class FaActividadMetabolicaForm(forms.ModelForm):
+    cantidad_horas = forms.IntegerField(
+        label="Cantidad de Horas",
+        widget=forms.NumberInput(attrs={'min': 1}),
+        min_value=1
+    )
+    class Meta:
+        model = FaActividadMetabolica
+        fields = ['actividad', 'cantidad_horas']
+
+    widgets = {
+            'actividad': forms.TextInput(attrs={'aria-hidden': 'false'})  # Forzar visibilidad
+        }
+       
+class FaActividadFuncionalForm(forms.ModelForm):
+    cantidad_horas = forms.IntegerField(
+        label="Cantidad de Horas",
+        widget=forms.NumberInput(attrs={'min': 1}),
+        min_value=1
+    )
+    class Meta:
+        model = FaActividadFuncional
+        fields = ['actividad', 'cantidad_horas']
+        widgets = {
+            'actividad': forms.Select(attrs={'class': 'form-control actividad-seleccion'}),
+            'cantidad_horas': forms.Select(attrs={'class': 'form-control actividad-seleccion'}),
+        }
         
+class ResumenTmbPesoForm(forms.ModelForm):
+    class Meta:
+        model = ResumenTmbPeso
+        fields = '__all__'     
 
-
+class FaForm(forms.ModelForm):
+    class Meta:
+        model = Fa
+        fields = '__all__'

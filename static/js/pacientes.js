@@ -353,4 +353,310 @@ document.addEventListener('DOMContentLoaded', function () {
         cinturaField.on('input change', calcularIce); 
     }
 
+    // FUNCIÓN PARA CAPTURAR DATOS  DESDE EL FORMULARIO Y CREAR EL SOMATOTIPO
+    $('input').on('input', function () {
+        let datosCompletos = true;
+        const datosFormulario = {
+            peso: parseFloat($('#id_peso_actual').val()) || 0,
+            talla: parseFloat($('#id_talla').val()) || 1,
+            pliegueTricipital: parseFloat($('#id_pliegue_triccipital').val()) || 0,
+            pliegueSubescapular: parseFloat($('#id_pliegue_subescapular').val()) || 0,
+            pliegueSupraespinal: parseFloat($('#id_pliegue_suprespinal').val()) || 0,
+            plieguePantorrilla: parseFloat($('#id_pliegue_pantorilla').val()) || 0,
+            diametroHumero: parseFloat($('#id_d_humero').val()) || 0,
+            diametroFemur: parseFloat($('#id_d_femur').val()) || 0,
+            perimetroBrazo: parseFloat($('#id_p_brazo_contraido').val()) || 0,
+            perimetroPantorrilla: parseFloat($('#id_p_pantorrilla').val()) || 0
+        };
+        
+        for (const key in datosFormulario) {
+            if (datosFormulario[key] === 0) {
+                datosCompletos = false;
+                break;
+            }
+        }
+        
+        if (datosCompletos) {
+            $('.mensaje-inicial').hide();
+            $('#grafico-somatocarta').show(); 
+            calcularSomatotipoFrontend(datosFormulario);
+        } else {
+            $('.mensaje-inicial').show(); 
+            $('#grafico-somatocarta').hide(); 
+        }
     });
+
+    function calcularSomatotipoFrontend(datosFormulario) {
+        let triceps = datosFormulario.pliegueTricipital;
+        let subescapular = datosFormulario.pliegueSubescapular;
+        let supraespinal = datosFormulario.pliegueSupraespinal;
+        let altura = datosFormulario.talla;
+        
+        let E = (triceps + subescapular + supraespinal) * (170.18 / (altura * 100));
+        let endo = -0.7182 + 0.1451 * E - 0.00068 * (E ** 2) + 0.0000014 * (E ** 3);
+
+        let p_brazo_corregido = datosFormulario.perimetroBrazo - (triceps / 10);
+        let p_pantorilla_corregido = datosFormulario.perimetroPantorrilla - (datosFormulario.plieguePantorrilla / 10);
+
+        let meso = (0.858 * datosFormulario.diametroHumero + 0.601 * datosFormulario.diametroFemur +
+            0.188 * p_brazo_corregido + 0.161 * p_pantorilla_corregido - 0.131 * (altura * 100) + 4.5);
+
+        let C = datosFormulario.peso > 0 ? ((altura * 100) / (Math.cbrt(datosFormulario.peso))) : 0;
+        let ecto;
+        
+        if (C >= 40.75) {
+            ecto = 0.732 * C - 28.58;
+        } else if (C >= 38.25 && C < 40.75) {
+            ecto = 0.463 * C - 17.63;
+        } else {
+            ecto = 0.1;
+        }
+
+        let X = parseFloat((ecto - endo).toFixed(2));
+        let Y = parseFloat((2 * meso - (ecto + endo)).toFixed(2));
+
+        setTimeout(() => {
+            graficarSomatocartaIndividual(X, Y);
+        }, 300);
+    }
+
+    function graficarSomatocartaIndividual(X, Y) {
+        let canvas = document.getElementById('grafico-somatocarta-individual');
+        if (!canvas) {
+            console.warn("Esperando a que el canvas esté disponible...");
+            setTimeout(() => graficarSomatocartaIndividual(X, Y), 500);
+            return;
+        }
+    
+        let ctx = canvas.getContext("2d");
+        if (window.miGrafico) {
+            window.miGrafico.destroy();
+        }
+        let imagenFondo = new Image();
+        imagenFondo.src = imagenURL; 
+    
+        imagenFondo.onload = function () {
+            const fondoPlugin = {
+                id: 'fondoImagen',
+                beforeDraw: (chart) => {
+                    if (imagenFondo.complete) {
+                        let ctx = chart.ctx;
+                        let { top, left, width, height } = chart.chartArea;
+                        ctx.drawImage(imagenFondo, left, top, width, height);
+                    }
+                }
+            };
+            window.miGrafico = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Punto',
+                        data: [{ x: X, y: Y }],
+                        backgroundColor: 'blue',
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            min: -15,
+                            max: 15,
+                            grid: {
+                                color: (ctx) => ctx.tick.value === 0 ? 'black' : '#ccc',
+                                lineWidth: (ctx) => ctx.tick.value === 0 ? 2 : 1
+                            },
+                            ticks: {
+                                stepSize: 1,
+                                color: "black",
+                                font: { size: 12 },
+                                padding: 8,
+                                maxRotation: 0,
+                                minRotation: 0
+                            }
+                        },
+                        y: {
+                            min: -15,
+                            max: 15,
+                            grid: {
+                                color: (ctx) => ctx.tick.value === 0 ? 'black' : '#ccc',
+                                lineWidth: (ctx) => ctx.tick.value === 0 ? 2 : 1
+                            },
+                            ticks: {
+                                stepSize: 1,
+                                color: "black",
+                                font: { size: 12 },
+                                padding: 8
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                },
+                plugins: [fondoPlugin] 
+            });
+        };
+    }
+    
+
+  // FUNCIÓN PARA CREAR EL SOMATOTIPO UNA VEZ GUARDADOS LOS DATOS EN LA BD
+    $(".field-num_ficha a").on("click", function (event) {
+        event.preventDefault();
+        let url = $(this).attr("href");
+        let match = url.match(/\/pacientes\/paciente\/(\d+)\/change\//);
+        let pacienteId = match ? match[1] : null;
+    
+            if (pacienteId) {
+                window.location.href = `/admin/pacientes/paciente/${pacienteId}/change/`;
+            }
+        });
+        let match = window.location.href.match(/\/pacientes\/paciente\/(\d+)\/change\//);
+        let pacienteId = match ? match[1] : null;
+    
+        if (pacienteId) {
+            fetch(`/pacientes/${pacienteId}/`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Error en la solicitud');
+                    return response.json();
+                })
+                .then(data => {
+                    let calculosPaciente = {
+                        peso: data.peso_actual,
+                        altura: data.talla,
+                        pliegue_triceps: data.pliegue_triccipital,
+                        pliegue_subescapular: data.pliegue_subescapular,
+                        pliegue_supraespinal: data.pliegue_suprespinal,
+                        pliegue_pantorilla: data.pliegue_pantorilla,
+                        diametro_humero: data.d_humero,
+                        diametro_femur: data.d_femur,
+                        perimetro_brazo: data.p_brazo_contraido,
+                        perimetro_pantorilla: data.p_pantorrilla
+                       
+                    };
+    
+                    calcularSomatotipo(calculosPaciente);
+                })
+                .catch(error => {
+                    console.error('Error al obtener datos del paciente:', error);
+                });
+        }
+    
+        function calcularSomatotipo(calculosPaciente) {
+            let triceps = parseFloat(calculosPaciente.pliegue_triceps) || 0;
+            let subescapular = parseFloat(calculosPaciente.pliegue_subescapular) || 0;
+            let supraespinal = parseFloat(calculosPaciente.pliegue_supraespinal) || 0;
+            let altura = parseFloat(calculosPaciente.altura) || 1;
+    
+            let E = (triceps + subescapular + supraespinal) * (170.18 / (altura * 100));
+            let endo = -0.7182 + 0.1451 * E - 0.00068 * (E ** 2) + 0.0000014 * (E ** 3);
+    
+            let p_brazo_corregido = calculosPaciente.perimetro_brazo - (calculosPaciente.pliegue_triceps / 10);
+            let p_pantorilla_corregido = calculosPaciente.perimetro_pantorilla - (calculosPaciente.pliegue_pantorilla / 10);
+            let meso = (0.858 * calculosPaciente.diametro_humero + 0.601 * calculosPaciente.diametro_femur +
+                0.188 * p_brazo_corregido + 0.161 * p_pantorilla_corregido - 0.131 * (calculosPaciente.altura * 100) + 4.5);
+    
+            let C = (calculosPaciente.altura * 100) / (calculosPaciente.peso ** (1 / 3));
+            let ecto;
+            if (C >= 40.75) {
+                ecto = 0.732 * C - 28.58;
+            } else if (C >= 38.25 && C < 40.75) {
+                ecto = 0.463 * C - 17.63;
+            } else {
+                ecto = 0.1;
+            }
+    
+            let X = (ecto - endo).toFixed(2);
+            let Y = (2 * meso - (ecto + endo)).toFixed(2);
+            X = parseFloat(X);
+            Y = parseFloat(Y);
+    
+            setTimeout(() => {
+                graficarSomatocarta(X, Y);
+            }, 300);
+        }
+    
+        function graficarSomatocarta(X, Y) {
+            let canvas = document.getElementById('grafico');
+            if (!canvas) {
+                console.warn("Esperando a que el canvas esté disponible...");
+                setTimeout(() => graficarSomatocarta(X, Y), 500);
+                return;
+            }
+        
+            let ctx = canvas.getContext("2d");
+            if (window.miGrafico) {
+                window.miGrafico.destroy();
+            }
+        
+            let imagenFondo = new Image();
+            imagenFondo.src = imagenURL; 
+        
+            imagenFondo.onload = function () {
+                const fondoPlugin = {
+                    id: 'fondoImagen',
+                    beforeDraw: (chart) => {
+                        if (imagenFondo.complete) {
+                            let ctx = chart.ctx;
+                            let { top, left, width, height } = chart.chartArea;
+                            ctx.drawImage(imagenFondo, left, top, width, height);
+                        }
+                    }
+                };
+                window.miGrafico = new Chart(ctx, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{
+                            label: 'Punto',
+                            data: [{ x: X, y: Y }],
+                            backgroundColor: 'blue',
+                            pointRadius: 5,
+                            pointHoverRadius: 7
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                min: -15,
+                                max: 15,
+                                grid: {
+                                    color: (ctx) => ctx.tick.value === 0 ? 'black' : '#ccc',
+                                    lineWidth: (ctx) => ctx.tick.value === 0 ? 2 : 1
+                                },
+                                ticks: {
+                                    stepSize: 1,
+                                    color: "black",
+                                    font: { size: 12 },
+                                    padding: 8,
+                                    maxRotation: 0,
+                                    minRotation: 0
+                                }
+                            },
+                            y: {
+                                min: -15,
+                                max: 15,
+                                grid: {
+                                    color: (ctx) => ctx.tick.value === 0 ? 'black' : '#ccc',
+                                    lineWidth: (ctx) => ctx.tick.value === 0 ? 2 : 1
+                                },
+                                ticks: {
+                                    stepSize: 1,
+                                    color: "black",
+                                    font: { size: 12 },
+                                    padding: 8
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    },
+                    plugins: [fondoPlugin]
+                });
+            };
+        }
+});

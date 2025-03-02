@@ -6,9 +6,8 @@ class PlanDietetico(models.Model):
     fecha_registro = models.DateTimeField(auto_now_add=True,verbose_name='Fecha de Creación')
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
     nombre_plan = models.CharField(max_length=60, blank=True, null=True, verbose_name='Nombre del Plan')
-    objetivo = models.CharField(max_length=30, blank=True, null=True, verbose_name='Objetivo')
     formula = models.CharField(
-        choices=[('OMS','OMS'),('Harris Benedict','Harris Benedict')],
+        choices=[('OMS','OMS'),('Harris Benedict','Harris Benedict'),('Schofield','Schofield')],
         max_length=30,
         verbose_name='Fórmula a Utilizar', 
         null=False,
@@ -23,9 +22,6 @@ class PlanDietetico(models.Model):
     porcentaje_carbohidrato = models.FloatField(verbose_name='Carbohidratos (%)')
     porcentaje_grasa = models.FloatField(verbose_name='Grasa (%)')
 
-  
-
-    
     def __str__(self):
             return self.nombre_plan
 

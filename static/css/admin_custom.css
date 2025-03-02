@@ -54,7 +54,6 @@ table thead a {
 }
 
 /* ESTILOS  PARA EL FORM*/
-
 .custom-card-body {
     padding: 2rem; 
 }
@@ -100,7 +99,6 @@ label {
 }
 
 /* ESTILOS PARA EL BOTÓN DE EXPORTAR */
-
 .export_link {
     display: inline-block;
     color: #fff !important;
@@ -126,6 +124,49 @@ label {
     background-color: #218838;
     border-color: #1e7e34;
 }
+
+.full-width-alert {
+    max-width: 93%;
+    width: 100%;
+    padding: 10px;
+    background-color: #dc3545;
+    color: #fff;
+    text-align: center;
+    border: 1px solid #dc3545;
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin: 10px auto; 
+}
+
+/* Ajustar el icono de cerrar */
+.full-width-alert-close {
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: auto; 
+    padding: 0 10px;
+}
+
+.tamaño-card {
+    min-height: 550px;
+}
+
+.centrar-grafico{
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    flex-direction: column; 
+}
+
+
+
+
+
+
 
 
 

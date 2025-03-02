@@ -31,10 +31,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'numpy',
+    'ajax_datatable',
     'import_export',
     'plotly',
     'planes_dieteticos',
-    'fa',
     'reportes',
     'pacientes',
     'alimentos',
@@ -62,7 +63,7 @@ MIDDLEWARE = [
 JAZZMIN_SETTINGS = {
      "changeform_format_overrides": {
         "planes_dieteticos.PlanDietetico": "horizontal_tabs", 
-        "pacientes.Paciente":"vertical_tabs" 
+        "pacientes.Paciente":"horizontal_tabs" 
     },
     "related_modal_active": True,
     "custom_css": "css/admin_custom.css",

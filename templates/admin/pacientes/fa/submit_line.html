@@ -1,0 +1,38 @@
+{% load i18n admin_urls jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+
+{% block submit-row %}
+    <div class="row">
+        {% if show_save %}
+            <div class="col-md-3 col-12 mb-2">
+                <button type="submit" class="btn btn-primary form-control">
+                    {% trans "Save" %}
+                </button>
+            </div>
+        {% endif %}
+
+        {% if show_save_and_add_another %}
+            <div class="col-md-3 col-12 mb-2">
+                <button type="submit" class="btn btn-secondary form-control">
+                    {% trans "Save and add another" %}
+                </button>
+            </div>
+        {% endif %}
+
+        {% if show_save_and_continue %}
+            <div class="col-md-3 col-12 mb-2">
+                <button type="submit" class="btn btn-success form-control">
+                    {% trans "Save and continue editing" %}
+                </button>
+            </div>
+        {% endif %}
+
+        <div class="col-md-3 col-12 mb-2">
+            <button type="button" class="btn btn-warning form-control text-white" onclick="window.history.back();">
+                {% trans "Cancelar" %}
+            </button>
+        </div>
+    </div>
+{% block extra-actions %}
+{% endblock %}
+{% endblock %}

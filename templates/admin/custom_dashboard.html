@@ -74,9 +74,9 @@
     </div>
 
     <div class="row mt-2">
-        <div class="col-md-12 col-12 mb-2">
+        <div class="col-md-6 col-12 mb-2">
             <div class="card h-auto rounded card-custom-border">
-                <div class="card-body">
+                <div class="card-body tamaño-card">
                     <div class="mb-3 text-center">
                         <h5 class="card-title text-center text-muted"><strong>PACIENTES MÁS FRECUENTES</strong></h5>
                     </div>
@@ -85,7 +85,20 @@
                     </div>
                 </div>
             </div>
+            
         </div>
-</div>
+        <div class="col-md-6 col-12 mb-2">
+            <div class="card h-auto rounded card-custom-border">
+                <div class="card-body tamaño-card">
+                    <div class="mb-3 text-center">
+                        <h5 class="card-title text-center text-muted"><strong>SOMATOCARTA GRUPAL</strong></h5>
+                    </div>
+                    <div class="card-body graph-container">
+                        {{somatocarta_html|safe}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 {% endblock %}
